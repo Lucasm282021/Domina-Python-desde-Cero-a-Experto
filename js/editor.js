@@ -48,7 +48,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             stdout: (text) => appendOutput(text),
             stderr: (text) => appendOutput(`<span class="text-red-400">${text}</span>`)
         });
-        
+        window.pyodideInstance = pyodideInstance; // Exponer globalmente para otros editores
+
         loadingText.innerText = "¡Listo!";
         setTimeout(() => {
             loadingOverlay.classList.add('hidden');
@@ -70,9 +71,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         runBtn.classList.add("opacity-70", "cursor-wait");
         pyodideLoader.classList.remove("hidden");
 
+        let success = false;
         try {
             await pyodideInstance.runPythonAsync(code);
-            window._practiceCompleted = true; // Flag for strict progression
+            window._practiceCompleted = true;
+            success = true;
         } catch (err) {
             window._practiceCompleted = false;
             appendOutput(`<span class="text-red-400 font-bold">Error:</span>\n<span class="text-red-400">${err}</span>`);
@@ -80,6 +83,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             runBtn.classList.remove("opacity-70", "cursor-wait");
             pyodideLoader.classList.add("hidden");
         }
+        // Notificar al controlador de la lección
+        if (typeof window._onCodeRan === 'function') window._onCodeRan(success);
     });
 
     // 5. Utilidades

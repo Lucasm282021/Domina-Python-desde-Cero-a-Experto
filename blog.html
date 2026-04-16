@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Dominio Profesional de Python</title>
+    <meta name="description" content="Artículos, tutoriales y novedades sobre Python, programación, ciencia de datos y desarrollo web. Aprende con contenido actualizado del equipo de Python Mastery.">
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#3b82f6', darkBg: '#0f172a' } } } }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-darkBg dark:text-gray-100 transition-colors duration-300 antialiased fade-in">
+
+    <!-- Header / Navbar -->
+    <header>
+        <nav class="sticky top-0 z-50 glass border-b border-gray-200 dark:border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+                <a href="index.html" class="flex gap-2 items-center">
+                    <i class="fa-brands fa-python text-3xl text-blue-500"></i>
+                    <span class="font-bold text-xl hidden sm:block">Python<span class="text-blue-500">Mastery</span></span>
+                </a>
+                <div class="hidden sm:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 font-medium transition-colors">Inicio</a>
+                    <a href="cursos.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 font-medium transition-colors">Cursos</a>
+                    <a href="nosotros.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 font-medium transition-colors">Quiénes Somos</a>
+                    <a href="blog.html" class="text-blue-600 dark:text-blue-400 font-medium">Blog</a>
+                    <a href="contacto.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 font-medium transition-colors">Contacto</a>
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                        <i id="theme-icon" class="fa-solid fa-moon text-gray-600 dark:text-gray-300"></i>
+                    </button>
+                </div>
+                <div class="flex items-center sm:hidden gap-3">
+                    <button id="theme-toggle-mobile" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                        <i id="theme-icon-mobile" class="fa-solid fa-moon text-gray-600 dark:text-gray-300"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-gray-600 dark:text-gray-300">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden sm:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Inicio</a>
+                    <a href="cursos.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Cursos</a>
+                    <a href="nosotros.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Quiénes Somos</a>
+                    <a href="blog.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 bg-blue-50 dark:bg-gray-800">Blog</a>
+                    <a href="contacto.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Contacto</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero del Blog -->
+        <section class="py-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-darkBg dark:to-gray-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center slide-up">
+                <span class="inline-block bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-sm font-semibold px-4 py-1.5 rounded-full mb-5">Conocimiento que suma</span>
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white mb-4">Blog de <span class="text-gradient">Python Mastery</span></h1>
+                <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Artículos, tutoriales y guías para potenciar tu carrera como desarrollador Python. Contenido actualizado cada semana.</p>
+            </div>
+        </section>
+
+        <!-- Categorías -->
+        <section class="py-6 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 sticky top-16 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex gap-3 overflow-x-auto pb-1 scrollbar-none flex-wrap" id="category-filters">
+                    <button class="category-btn active px-4 py-1.5 rounded-full text-sm font-medium bg-blue-600 text-white transition-all" data-category="all">Todos</button>
+                    <button class="category-btn px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 transition-all" data-category="python">Python Core</button>
+                    <button class="category-btn px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 transition-all" data-category="data">Ciencia de Datos</button>
+                    <button class="category-btn px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 transition-all" data-category="web">Desarrollo Web</button>
+                    <button class="category-btn px-4 py-1.5 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900 transition-all" data-category="carrera">Carrera & Tips</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Artículo destacado -->
+        <section class="py-14 bg-white dark:bg-gray-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-2">
+                    <i class="fa-solid fa-star text-yellow-400"></i> Artículo Destacado
+                </h2>
+                <article class="blog-card group bg-gradient-to-br from-blue-600 to-purple-700 rounded-2xl overflow-hidden shadow-xl" data-category="python">
+                    <div class="p-10 sm:p-14 flex flex-col sm:flex-row items-start gap-8">
+                        <div class="flex-grow">
+                            <span class="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-5">Python Core</span>
+                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-4 group-hover:underline underline-offset-4">
+                                Python en 2026: Todo lo que necesitás saber sobre las últimas características del lenguaje
+                            </h3>
+                            <p class="text-blue-100 text-base leading-relaxed mb-6">Exploramos las nuevas funcionalidades de Python 3.14, los cambios más significativos en tipado estático, las mejoras en performance y cómo utilizarlas en proyectos reales. Una guía completa para mantener tu código actualizado y eficiente.</p>
+                            <div class="flex items-center gap-4 text-blue-200 text-sm">
+                                <span class="flex items-center gap-1.5"><i class="fa-solid fa-user-circle"></i> Lucas M.</span>
+                                <span class="flex items-center gap-1.5"><i class="fa-regular fa-calendar"></i> 10 Abr, 2026</span>
+                                <span class="flex items-center gap-1.5"><i class="fa-regular fa-clock"></i> 12 min de lectura</span>
+                            </div>
+                        </div>
+                        <a href="#" class="flex-shrink-0 bg-white text-blue-700 font-bold px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors whitespace-nowrap shadow-lg">
+                            Leer artículo <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Grid de artículos -->
+        <section class="py-6 pb-20 bg-gray-50 dark:bg-darkBg">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-8">Últimos artículos</h2>
+                <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- Artículo 1 -->
+                    <article class="blog-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl transition-shadow" data-category="data">
+                        <div class="h-44 bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center">
+                            <i class="fa-solid fa-chart-bar text-white text-5xl opacity-80"></i>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 text-xs font-semibold px-3 py-1 rounded-full mb-3">Ciencia de Datos</span>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 leading-snug hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                <a href="#">Pandas vs Polars: ¿Cuál elegir para tu proyecto de datos en 2026?</a>
+                            </h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-4">Comparativa exhaustiva entre las dos librerías más populares para el manejo de dataframes en Python. Benchmarks, sintaxis y casos de uso reales.</p>
+                            <div class="flex items-center justify-between text-xs text-gray-400 dark:text-gray-500">
+                                <span class="flex items-center gap-1"><i class="fa-solid fa-user-circle"></i> Carlos Ruiz</span>
+                                <span>5 Abr, 2026 · 8 min</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Artículo 2 -->
+                    <article class="blog-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl transition-shadow" data-category="web">
+                        <div class="h-44 bg-gradient-to-br from-orange-400 to-pink-600 flex items-center justify-center">
+                            <i class="fa-brands fa-django text-white text-5xl opacity-80"></i>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 text-xs font-semibold px-3 py-1 rounded-full mb-3">Desarrollo Web</span>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 leading-snug hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                <a href="#">Crea tu primera API REST con Django y Django REST Framework</a>
+                            </h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-4">Guía paso a paso para construir una API RESTful completa con autenticación JWT, paginación y serializers personalizados.</p>
+                            <div class="flex items-center justify-between text-xs text-gray-400 dark:text-gray-500">
+                                <span class="flex items-center gap-1"><i class="fa-solid fa-user-circle"></i> Lucas M.</span>
+                                <span>2 Abr, 2026 · 15 min</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Artículo 3 -->
+                    <article class="blog-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl transition-shadow" data-category="python">
+                        <div class="h-44 bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center">
+                            <i class="fa-solid fa-code text-white text-5xl opacity-80"></i>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-semibold px-3 py-1 rounded-full mb-3">Python Core</span>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 leading-snug hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                <a href="#">Decoradores en Python: desde lo básico hasta los casos avanzados</a>
+                            </h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-4">Aprende a crear y usar decoradores para cachear funciones, medir tiempos de ejecución, validar argumentos y mucho más.</p>
+                            <div class="flex items-center justify-between text-xs text-gray-400 dark:text-gray-500">
+                                <span class="flex items-center gap-1"><i class="fa-solid fa-user-circle"></i> Lucas M.</span>
+                                <span>28 Mar, 2026 · 10 min</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Artículo 4 -->
+                    <article class="blog-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl transition-shadow" data-category="carrera">
+                        <div class="h-44 bg-gradient-to-br from-yellow-400 to-orange-600 flex items-center justify-center">
+                            <i class="fa-solid fa-briefcase text-white text-5xl opacity-80"></i>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 text-xs font-semibold px-3 py-1 rounded-full mb-3">Carrera & Tips</span>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 leading-snug hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                <a href="#">10 proyectos Python para agregar a tu portafolio y conseguir trabajo</a>
+                            </h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-4">Ideas de proyectos concretos que impresionan a los reclutadores: desde un scraper hasta un dashboard interactivo con Streamlit.</p>
+                            <div class="flex items-center justify-between text-xs text-gray-400 dark:text-gray-500">
+                                <span class="flex items-center gap-1"><i class="fa-solid fa-user-circle"></i> Ana García</span>
+                                <span>20 Mar, 2026 · 7 min</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Artículo 5 -->
+                    <article class="blog-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl transition-shadow" data-category="data">
+                        <div class="h-44 bg-gradient-to-br from-cyan-400 to-blue-700 flex items-center justify-center">
+                            <i class="fa-solid fa-brain text-white text-5xl opacity-80"></i>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block bg-cyan-100 dark:bg-cyan-900 text-cyan-700 dark:text-cyan-300 text-xs font-semibold px-3 py-1 rounded-full mb-3">Ciencia de Datos</span>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 leading-snug hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                <a href="#">Introducción a Machine Learning con scikit-learn: guía práctica 2026</a>
+                            </h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-4">Implementación de algoritmos de clasificación y regresión, evaluación de modelos y pipelines listos para producción.</p>
+                            <div class="flex items-center justify-between text-xs text-gray-400 dark:text-gray-500">
+                                <span class="flex items-center gap-1"><i class="fa-solid fa-user-circle"></i> Carlos Ruiz</span>
+                                <span>15 Mar, 2026 · 18 min</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Artículo 6 -->
+                    <article class="blog-card bg-white dark:bg-gray-800 rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-xl transition-shadow" data-category="python">
+                        <div class="h-44 bg-gradient-to-br from-violet-400 to-purple-700 flex items-center justify-center">
+                            <i class="fa-solid fa-gear text-white text-5xl opacity-80"></i>
+                        </div>
+                        <div class="p-6">
+                            <span class="inline-block bg-violet-100 dark:bg-violet-900 text-violet-700 dark:text-violet-300 text-xs font-semibold px-3 py-1 rounded-full mb-3">Python Core</span>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2 leading-snug hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                                <a href="#">Programación asíncrona con asyncio: guía definitiva para principiantes</a>
+                            </h3>
+                            <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed mb-4">Comprende el event loop, corrutinas, Tasks y cómo acelerar tus aplicaciones Python con concurrencia real sin hilos.</p>
+                            <div class="flex items-center justify-between text-xs text-gray-400 dark:text-gray-500">
+                                <span class="flex items-center gap-1"><i class="fa-solid fa-user-circle"></i> Lucas M.</span>
+                                <span>8 Mar, 2026 · 14 min</span>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <!-- Newsletter CTA -->
+                <div class="mt-16 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-10 text-center shadow-xl">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-3">¿No querés perderte ningún artículo?</h2>
+                    <p class="text-blue-100 mb-7">Suscribite y recibí los mejores tutoriales directamente en tu casilla de correo, sin spam.</p>
+                    <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" novalidate>
+                        <input type="email" id="newsletter-email" placeholder="tu@email.com" required class="flex-grow px-4 py-3 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white">
+                        <button type="submit" id="newsletter-submit" class="bg-white text-blue-700 font-bold px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors whitespace-nowrap shadow-md">
+                            Suscribirme <i class="fa-solid fa-bell ml-1"></i>
+                        </button>
+                    </form>
+                    <p id="newsletter-feedback" class="mt-3 text-blue-200 text-sm hidden"></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 pt-14 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
+                <div class="md:col-span-1">
+                    <a href="index.html" class="flex items-center gap-2 mb-4">
+                        <i class="fa-brands fa-python text-3xl text-blue-500"></i>
+                        <span class="font-bold text-xl text-white">Python<span class="text-blue-500">Mastery</span></span>
+                    </a>
+                    <p class="text-sm text-gray-500 leading-relaxed">La plataforma interactiva para aprender Python desde cero hasta nivel experto.</p>
+                    <div class="flex gap-4 mt-5">
+                        <a href="#" class="hover:text-blue-400 transition-colors"><i class="fa-brands fa-twitter text-xl"></i></a>
+                        <a href="#" class="hover:text-blue-400 transition-colors"><i class="fa-brands fa-github text-xl"></i></a>
+                        <a href="#" class="hover:text-blue-400 transition-colors"><i class="fa-brands fa-linkedin text-xl"></i></a>
+                        <a href="#" class="hover:text-blue-400 transition-colors"><i class="fa-brands fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Navegación</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="hover:text-white transition-colors">Inicio</a></li>
+                        <li><a href="cursos.html" class="hover:text-white transition-colors">Cursos</a></li>
+                        <li><a href="nosotros.html" class="hover:text-white transition-colors">Quiénes Somos</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="contacto.html" class="hover:text-white transition-colors">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Recursos</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="evaluaciones.html" class="hover:text-white transition-colors">Evaluaciones</a></li>
+                        <li><a href="certificado.html" class="hover:text-white transition-colors">Certificación</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">Artículos y Tutoriales</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Contacto</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-blue-400"></i><span>hola@pythonmastery.com</span></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-blue-400"></i><span>+54 11 0000-0000</span></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-blue-400"></i><span>Buenos Aires, Argentina</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-sm">
+                <p>&copy; 2026 Dominio Profesional de Python. Todos los derechos reservados.</p>
+                <div class="flex gap-5">
+                    <a href="#" class="hover:text-white transition-colors">Política de Privacidad</a>
+                    <a href="#" class="hover:text-white transition-colors">Términos de Uso</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Filtro de categorías de blog
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const blogCards = document.querySelectorAll('#blog-grid .blog-card');
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => {
+                    b.classList.remove('bg-blue-600', 'text-white');
+                    b.classList.add('bg-gray-100', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300');
+                });
+                btn.classList.add('bg-blue-600', 'text-white');
+                btn.classList.remove('bg-gray-100', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300');
+
+                const cat = btn.dataset.category;
+                blogCards.forEach(card => {
+                    if (cat === 'all' || card.dataset.category === cat) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Newsletter
+        const newsletterForm = document.getElementById('newsletter-form');
+        const newsletterFeedback = document.getElementById('newsletter-feedback');
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('newsletter-email').value.trim();
+            if (!email) return;
+            newsletterFeedback.textContent = `¡Listo! Te suscribiste con ${email}. Bienvenido/a 🎉`;
+            newsletterFeedback.classList.remove('hidden');
+            newsletterForm.reset();
+        });
+    </script>
+</body>
+</html>

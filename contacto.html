@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto | Dominio Profesional de Python</title>
+    <meta name="description" content="Ponete en contacto con el equipo de Python Mastery. Respondemos todas tus consultas sobre nuestros cursos y programas de aprendizaje.">
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: '#3b82f6', darkBg: '#0f172a' } } } }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-darkBg dark:text-gray-100 transition-colors duration-300 antialiased fade-in">
+
+    <!-- Header / Navbar -->
+    <header>
+        <nav class="sticky top-0 z-50 glass border-b border-gray-200 dark:border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+                <a href="index.html" class="flex gap-2 items-center">
+                    <i class="fa-brands fa-python text-3xl text-blue-500"></i>
+                    <span class="font-bold text-xl hidden sm:block">Python<span class="text-blue-500">Mastery</span></span>
+                </a>
+                <div class="hidden sm:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 font-medium transition-colors">Inicio</a>
+                    <a href="cursos.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 font-medium transition-colors">Cursos</a>
+                    <a href="nosotros.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 font-medium transition-colors">Quiénes Somos</a>
+                    <a href="blog.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 font-medium transition-colors">Blog</a>
+                    <a href="contacto.html" class="text-blue-600 dark:text-blue-400 font-medium">Contacto</a>
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                        <i id="theme-icon" class="fa-solid fa-moon text-gray-600 dark:text-gray-300"></i>
+                    </button>
+                </div>
+                <div class="flex items-center sm:hidden gap-3">
+                    <button id="theme-toggle-mobile" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                        <i id="theme-icon-mobile" class="fa-solid fa-moon text-gray-600 dark:text-gray-300"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="text-gray-600 dark:text-gray-300">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden sm:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Inicio</a>
+                    <a href="cursos.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Cursos</a>
+                    <a href="nosotros.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Quiénes Somos</a>
+                    <a href="blog.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Blog</a>
+                    <a href="contacto.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 bg-blue-50 dark:bg-gray-800">Contacto</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="py-16 bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-darkBg dark:to-gray-900">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center slide-up">
+                <span class="inline-block bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-sm font-semibold px-4 py-1.5 rounded-full mb-5">Estamos aquí para ayudarte</span>
+                <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900 dark:text-white mb-4">Ponete en <span class="text-gradient">Contacto</span></h1>
+                <p class="text-lg text-gray-600 dark:text-gray-400">¿Tenés dudas sobre los cursos, el certificado o necesitás soporte técnico? Escribinos y te respondemos en menos de 24 hs.</p>
+            </div>
+        </section>
+
+        <!-- Formulario + Info -->
+        <section class="py-20 bg-white dark:bg-gray-900">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-12">
+
+                    <!-- Información de contacto -->
+                    <div class="lg:col-span-2 space-y-8">
+                        <div>
+                            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Información de Contacto</h2>
+                            <div class="space-y-5">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-11 h-11 flex-shrink-0 rounded-xl bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
+                                        <i class="fa-solid fa-envelope text-blue-600 dark:text-blue-400"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-800 dark:text-gray-200">Email</p>
+                                        <a href="mailto:hola@pythonmastery.com" class="text-blue-600 dark:text-blue-400 hover:underline text-sm">hola@pythonmastery.com</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-11 h-11 flex-shrink-0 rounded-xl bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center">
+                                        <i class="fa-solid fa-phone text-emerald-600 dark:text-emerald-400"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-800 dark:text-gray-200">Teléfono / WhatsApp</p>
+                                        <a href="tel:+541100000000" class="text-emerald-600 dark:text-emerald-400 hover:underline text-sm">+54 11 0000-0000</a>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-11 h-11 flex-shrink-0 rounded-xl bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
+                                        <i class="fa-solid fa-location-dot text-purple-600 dark:text-purple-400"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-800 dark:text-gray-200">Ubicación</p>
+                                        <p class="text-gray-500 dark:text-gray-400 text-sm">Buenos Aires, Argentina</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-11 h-11 flex-shrink-0 rounded-xl bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center">
+                                        <i class="fa-solid fa-clock text-yellow-600 dark:text-yellow-400"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-800 dark:text-gray-200">Horario de atención</p>
+                                        <p class="text-gray-500 dark:text-gray-400 text-sm">Lun–Vie: 9:00 – 18:00 (GMT-3)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Redes sociales -->
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Seguinos en redes</h3>
+                            <div class="flex gap-4">
+                                <a href="#" id="social-twitter" class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 hover:bg-blue-500 hover:text-white transition-all"><i class="fa-brands fa-twitter"></i></a>
+                                <a href="#" id="social-github" class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 hover:bg-gray-800 hover:text-white transition-all"><i class="fa-brands fa-github"></i></a>
+                                <a href="#" id="social-linkedin" class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 hover:bg-blue-700 hover:text-white transition-all"><i class="fa-brands fa-linkedin"></i></a>
+                                <a href="#" id="social-youtube" class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 hover:bg-red-600 hover:text-white transition-all"><i class="fa-brands fa-youtube"></i></a>
+                                <a href="#" id="social-instagram" class="w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 hover:bg-pink-600 hover:text-white transition-all"><i class="fa-brands fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Formulario -->
+                    <div class="lg:col-span-3 bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Envianos un mensaje</h2>
+                        <form id="contact-form" class="space-y-5" novalidate>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                <div>
+                                    <label for="contact-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre <span class="text-red-500">*</span></label>
+                                    <input type="text" id="contact-name" name="nombre" required placeholder="Tu nombre" class="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                                </div>
+                                <div>
+                                    <label for="contact-email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email <span class="text-red-500">*</span></label>
+                                    <input type="email" id="contact-email" name="email" required placeholder="tu@email.com" class="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="contact-subject" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Asunto</label>
+                                <select id="contact-subject" name="asunto" class="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                                    <option value="">Seleccionar asunto...</option>
+                                    <option value="consulta-curso">Consulta sobre un curso</option>
+                                    <option value="soporte-tecnico">Soporte técnico</option>
+                                    <option value="certificado">Consulta sobre certificado</option>
+                                    <option value="colaboracion">Propuesta de colaboración</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="contact-message" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Mensaje <span class="text-red-500">*</span></label>
+                                <textarea id="contact-message" name="mensaje" rows="5" required placeholder="Escribí tu consulta aquí..." class="w-full px-4 py-2.5 rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"></textarea>
+                            </div>
+                            <div id="form-feedback" class="hidden text-sm px-4 py-3 rounded-lg"></div>
+                            <button type="submit" id="contact-submit" class="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-3 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i> Enviar mensaje
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mapa Google Maps -->
+        <section class="bg-gray-50 dark:bg-gray-950 py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Nuestra Ubicación</h2>
+                    <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm">Buenos Aires, Argentina</p>
+                </div>
+                <div class="rounded-2xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700 h-80">
+                    <iframe
+                        id="map-iframe"
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d52504.47073025895!2d-58.443831!3d-34.615503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sar!4v1681000000000!5m2!1ses!2sar"
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                        title="Mapa de ubicación - Buenos Aires, Argentina">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 pt-14 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
+                <div class="md:col-span-1">
+                    <a href="index.html" class="flex items-center gap-2 mb-4">
+                        <i class="fa-brands fa-python text-3xl text-blue-500"></i>
+                        <span class="font-bold text-xl text-white">Python<span class="text-blue-500">Mastery</span></span>
+                    </a>
+                    <p class="text-sm text-gray-500 leading-relaxed">La plataforma interactiva para aprender Python desde cero hasta nivel experto.</p>
+                    <div class="flex gap-4 mt-5">
+                        <a href="#" class="hover:text-blue-400 transition-colors"><i class="fa-brands fa-twitter text-xl"></i></a>
+                        <a href="#" class="hover:text-blue-400 transition-colors"><i class="fa-brands fa-github text-xl"></i></a>
+                        <a href="#" class="hover:text-blue-400 transition-colors"><i class="fa-brands fa-linkedin text-xl"></i></a>
+                        <a href="#" class="hover:text-blue-400 transition-colors"><i class="fa-brands fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Navegación</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="hover:text-white transition-colors">Inicio</a></li>
+                        <li><a href="cursos.html" class="hover:text-white transition-colors">Cursos</a></li>
+                        <li><a href="nosotros.html" class="hover:text-white transition-colors">Quiénes Somos</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="contacto.html" class="hover:text-white transition-colors">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Recursos</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="evaluaciones.html" class="hover:text-white transition-colors">Evaluaciones</a></li>
+                        <li><a href="certificado.html" class="hover:text-white transition-colors">Certificación</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">Artículos y Tutoriales</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Contacto</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-blue-400"></i><span>hola@pythonmastery.com</span></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-blue-400"></i><span>+54 11 0000-0000</span></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-blue-400"></i><span>Buenos Aires, Argentina</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-sm">
+                <p>&copy; 2026 Dominio Profesional de Python. Todos los derechos reservados.</p>
+                <div class="flex gap-5">
+                    <a href="#" class="hover:text-white transition-colors">Política de Privacidad</a>
+                    <a href="#" class="hover:text-white transition-colors">Términos de Uso</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Manejo del formulario de contacto (frontend)
+        const form = document.getElementById('contact-form');
+        const feedback = document.getElementById('form-feedback');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('contact-name').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+            const message = document.getElementById('contact-message').value.trim();
+
+            if (!name || !email || !message) {
+                feedback.textContent = 'Por favor completá los campos obligatorios (nombre, email y mensaje).';
+                feedback.className = 'text-sm px-4 py-3 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400';
+                feedback.classList.remove('hidden');
+                return;
+            }
+            // Simular envío exitoso
+            feedback.textContent = '¡Mensaje enviado! Te responderemos a la brevedad. 🎉';
+            feedback.className = 'text-sm px-4 py-3 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400';
+            feedback.classList.remove('hidden');
+            form.reset();
+        });
+    </script>
+</body>
+</html>

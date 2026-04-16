@@ -27,45 +27,49 @@
 </head>
 <body class="bg-gray-50 text-gray-900 dark:bg-darkBg dark:text-gray-100 transition-colors duration-300 antialiased fade-in">
     
-    <!-- Navbar -->
-    <nav class="sticky top-0 z-50 glass border-b border-gray-200 dark:border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <a href="index.html" class="flex-shrink-0 flex items-center gap-2">
-                        <i class="fa-brands fa-python text-3xl text-blue-500"></i>
-                        <span class="font-bold text-xl hidden sm:block">Python<span class="text-blue-500">Mastery</span></span>
-                    </a>
-                </div>
-                <div class="hidden sm:flex sm:items-center sm:space-x-8">
-                    <a href="index.html" class="text-blue-600 dark:text-blue-400 px-3 py-2 text-sm font-medium">Inicio</a>
-                    <a href="cursos.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 px-3 py-2 text-sm font-medium transition-colors">Cursos</a>
-                    <a href="evaluaciones.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 px-3 py-2 text-sm font-medium transition-colors">Evaluaciones</a>
-                    <a href="certificado.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 px-3 py-2 text-sm font-medium transition-colors">Certificado</a>
-                    
-                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-                        <i id="theme-icon" class="fa-solid fa-moon text-gray-600 dark:text-gray-300"></i>
-                    </button>
-                </div>
-                <div class="flex items-center sm:hidden gap-4">
-                    <button id="theme-toggle-mobile" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
-                        <i id="theme-icon-mobile" class="fa-solid fa-moon text-gray-600 dark:text-gray-300"></i>
-                    </button>
-                    <button id="mobile-menu-btn" class="text-gray-600 dark:text-gray-300 hover:text-gray-900 focus:outline-none">
-                        <i class="fa-solid fa-bars text-2xl"></i>
-                    </button>
+    <!-- Header / Navbar -->
+    <header>
+        <nav class="sticky top-0 z-50 glass border-b border-gray-200 dark:border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <a href="index.html" class="flex-shrink-0 flex items-center gap-2">
+                            <i class="fa-brands fa-python text-3xl text-blue-500"></i>
+                            <span class="font-bold text-xl hidden sm:block">Python<span class="text-blue-500">Mastery</span></span>
+                        </a>
+                    </div>
+                    <div class="hidden sm:flex sm:items-center sm:space-x-6">
+                        <a href="index.html" class="text-blue-600 dark:text-blue-400 px-3 py-2 text-sm font-medium">Inicio</a>
+                        <a href="cursos.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 px-3 py-2 text-sm font-medium transition-colors">Cursos</a>
+                        <a href="nosotros.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 px-3 py-2 text-sm font-medium transition-colors">Quiénes Somos</a>
+                        <a href="blog.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 px-3 py-2 text-sm font-medium transition-colors">Blog</a>
+                        <a href="contacto.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 px-3 py-2 text-sm font-medium transition-colors">Contacto</a>
+                        <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                            <i id="theme-icon" class="fa-solid fa-moon text-gray-600 dark:text-gray-300"></i>
+                        </button>
+                    </div>
+                    <div class="flex items-center sm:hidden gap-4">
+                        <button id="theme-toggle-mobile" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                            <i id="theme-icon-mobile" class="fa-solid fa-moon text-gray-600 dark:text-gray-300"></i>
+                        </button>
+                        <button id="mobile-menu-btn" class="text-gray-600 dark:text-gray-300 hover:text-gray-900 focus:outline-none">
+                            <i class="fa-solid fa-bars text-2xl"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden sm:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 bg-blue-50 dark:bg-gray-800">Inicio</a>
-                <a href="cursos.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Cursos</a>
-                <a href="evaluaciones.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Evaluaciones</a>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="hidden sm:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 bg-blue-50 dark:bg-gray-800">Inicio</a>
+                    <a href="cursos.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Cursos</a>
+                    <a href="nosotros.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Quiénes Somos</a>
+                    <a href="blog.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Blog</a>
+                    <a href="contacto.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">Contacto</a>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <!-- Hero Section -->
     <main>
@@ -184,15 +188,241 @@ estudiante.aprender(<span class="text-green-300">"Desarrollo Web con Django"</sp
                 </div>
             </div>
         </div>
+
+        <!-- Sección Temario -->
+        <section id="temario" class="py-20 bg-gray-50 dark:bg-darkBg border-t border-gray-100 dark:border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-14">
+                    <span class="inline-block bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">Plan de estudios</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white">
+                        Temario completo del curso
+                    </h2>
+                    <p class="mt-3 text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+                        De cero a experto. Cada módulo incluye teoría, ejercicios interactivos y evaluaciones.
+                    </p>
+                </div>
+
+                <div class="space-y-5 max-w-4xl mx-auto">
+
+                    <!-- Módulo 1 -->
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 p-5 cursor-pointer temario-toggle">
+                            <span class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 font-bold text-lg">1</span>
+                            <div class="flex-grow">
+                                <h3 class="font-bold text-gray-900 dark:text-white text-lg">Fundamentos de Python</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Sintaxis, variables, tipos de datos y operadores</p>
+                            </div>
+                            <span class="badge-pill bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-semibold px-3 py-1 rounded-full hidden sm:block">5 lecciones</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon"></i>
+                        </div>
+                        <div class="temario-body hidden px-5 pb-5 border-t border-gray-100 dark:border-gray-700">
+                            <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Introducción y entorno Python</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Variables y tipos de datos</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Operadores y expresiones</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Entrada y salida de datos</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Strings y operaciones básicas</li>
+                            </ul>
+                            <a href="cursos.html" class="inline-flex items-center gap-2 mt-5 text-blue-600 dark:text-blue-400 font-semibold text-sm hover:underline">
+                                Ir al módulo <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Módulo 2 -->
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 p-5 cursor-pointer temario-toggle">
+                            <span class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-300 font-bold text-lg">2</span>
+                            <div class="flex-grow">
+                                <h3 class="font-bold text-gray-900 dark:text-white text-lg">Control de Flujo y Funciones</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Condicionales, bucles, funciones y módulos</p>
+                            </div>
+                            <span class="badge-pill bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 text-xs font-semibold px-3 py-1 rounded-full hidden sm:block">6 lecciones</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon"></i>
+                        </div>
+                        <div class="temario-body hidden px-5 pb-5 border-t border-gray-100 dark:border-gray-700">
+                            <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-emerald-400 w-4"></i> Condicionales if/elif/else</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-emerald-400 w-4"></i> Bucles for y while</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-emerald-400 w-4"></i> Comprensiones de listas</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-emerald-400 w-4"></i> Definición de funciones</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-emerald-400 w-4"></i> Argumentos y valores por defecto</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-emerald-400 w-4"></i> Módulos y paquetes</li>
+                            </ul>
+                            <a href="cursos.html" class="inline-flex items-center gap-2 mt-5 text-emerald-600 dark:text-emerald-400 font-semibold text-sm hover:underline">
+                                Ir al módulo <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Módulo 3 -->
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 p-5 cursor-pointer temario-toggle">
+                            <span class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 font-bold text-lg">3</span>
+                            <div class="flex-grow">
+                                <h3 class="font-bold text-gray-900 dark:text-white text-lg">Estructuras de Datos</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Listas, tuplas, diccionarios y conjuntos</p>
+                            </div>
+                            <span class="badge-pill bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-semibold px-3 py-1 rounded-full hidden sm:block">5 lecciones</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon"></i>
+                        </div>
+                        <div class="temario-body hidden px-5 pb-5 border-t border-gray-100 dark:border-gray-700">
+                            <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-purple-400 w-4"></i> Listas y sus métodos</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-purple-400 w-4"></i> Tuplas e inmutabilidad</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-purple-400 w-4"></i> Diccionarios y acceso a datos</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-purple-400 w-4"></i> Conjuntos (sets)</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-purple-400 w-4"></i> Estructuras anidadas</li>
+                            </ul>
+                            <a href="cursos.html" class="inline-flex items-center gap-2 mt-5 text-purple-600 dark:text-purple-400 font-semibold text-sm hover:underline">
+                                Ir al módulo <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Módulo 4 -->
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 p-5 cursor-pointer temario-toggle">
+                            <span class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-orange-100 dark:bg-orange-900 text-orange-600 dark:text-orange-300 font-bold text-lg">4</span>
+                            <div class="flex-grow">
+                                <h3 class="font-bold text-gray-900 dark:text-white text-lg">Programación Orientada a Objetos</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Clases, herencia, polimorfismo y encapsulamiento</p>
+                            </div>
+                            <span class="badge-pill bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 text-xs font-semibold px-3 py-1 rounded-full hidden sm:block">6 lecciones</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon"></i>
+                        </div>
+                        <div class="temario-body hidden px-5 pb-5 border-t border-gray-100 dark:border-gray-700">
+                            <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Clases y objetos</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Atributos y métodos</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Herencia y sobrescritura</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Encapsulamiento</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Métodos especiales (dunder)</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Patrones de diseño básicos</li>
+                            </ul>
+                            <a href="cursos.html" class="inline-flex items-center gap-2 mt-5 text-orange-600 dark:text-orange-400 font-semibold text-sm hover:underline">
+                                Ir al módulo <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Módulo 5 -->
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                        <div class="flex items-center gap-4 p-5 cursor-pointer temario-toggle">
+                            <span class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-300 font-bold text-lg">5</span>
+                            <div class="flex-grow">
+                                <h3 class="font-bold text-gray-900 dark:text-white text-lg">Python Avanzado y Aplicaciones</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">Decoradores, generadores, async y proyectos reales</p>
+                            </div>
+                            <span class="badge-pill bg-pink-100 dark:bg-pink-900 text-pink-700 dark:text-pink-300 text-xs font-semibold px-3 py-1 rounded-full hidden sm:block">7 lecciones</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon"></i>
+                        </div>
+                        <div class="temario-body hidden px-5 pb-5 border-t border-gray-100 dark:border-gray-700">
+                            <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Decoradores avanzados</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Generadores e iteradores</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Programación asíncrona (asyncio)</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Manejo de archivos y APIs</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Testing con pytest</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Proyecto Web con Django</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Proyecto Data Science</li>
+                            </ul>
+                            <a href="cursos.html" class="inline-flex items-center gap-2 mt-5 text-pink-600 dark:text-pink-400 font-semibold text-sm hover:underline">
+                                Ir al módulo <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- CTA final -->
+                <div class="text-center mt-12">
+                    <a href="cursos.html" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-4 rounded-xl transition-colors shadow-lg text-base">
+                        <i class="fa-solid fa-rocket"></i> Comenzar ahora gratis
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white dark:bg-gray-900 py-8 border-t border-gray-200 dark:border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-500 dark:text-gray-400">
-            <p>&copy; 2026 Dominio Profesional de Python. Todos los derechos reservados.</p>
+    <footer class="bg-gray-900 text-gray-400 pt-14 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
+                <!-- Brand -->
+                <div class="md:col-span-1">
+                    <a href="index.html" class="flex items-center gap-2 mb-4">
+                        <i class="fa-brands fa-python text-3xl text-blue-500"></i>
+                        <span class="font-bold text-xl text-white">Python<span class="text-blue-500">Mastery</span></span>
+                    </a>
+                    <p class="text-sm text-gray-500 leading-relaxed">La plataforma interactiva para aprender Python desde cero hasta nivel experto.</p>
+                    <div class="flex gap-4 mt-5">
+                        <a href="#" class="hover:text-blue-400 transition-colors"><i class="fa-brands fa-twitter text-xl"></i></a>
+                        <a href="#" class="hover:text-blue-400 transition-colors"><i class="fa-brands fa-github text-xl"></i></a>
+                        <a href="#" class="hover:text-blue-400 transition-colors"><i class="fa-brands fa-linkedin text-xl"></i></a>
+                        <a href="#" class="hover:text-blue-400 transition-colors"><i class="fa-brands fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+                <!-- Navegación -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Navegación</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="index.html" class="hover:text-white transition-colors">Inicio</a></li>
+                        <li><a href="cursos.html" class="hover:text-white transition-colors">Cursos</a></li>
+                        <li><a href="nosotros.html" class="hover:text-white transition-colors">Quiénes Somos</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="contacto.html" class="hover:text-white transition-colors">Contacto</a></li>
+                    </ul>
+                </div>
+                <!-- Recursos -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Recursos</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="evaluaciones.html" class="hover:text-white transition-colors">Evaluaciones</a></li>
+                        <li><a href="certificado.html" class="hover:text-white transition-colors">Certificación</a></li>
+                        <li><a href="blog.html" class="hover:text-white transition-colors">Artículos y Tutoriales</a></li>
+                    </ul>
+                </div>
+                <!-- Contacto -->
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Contacto</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-blue-400"></i> <span>hola@pythonmastery.com</span></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-blue-400"></i> <span>+54 11 0000-0000</span></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-blue-400"></i> <span>Buenos Aires, Argentina</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-sm">
+                <p>&copy; 2026 Dominio Profesional de Python. Todos los derechos reservados.</p>
+                <div class="flex gap-5">
+                    <a href="#" class="hover:text-white transition-colors">Política de Privacidad</a>
+                    <a href="#" class="hover:text-white transition-colors">Términos de Uso</a>
+                </div>
+            </div>
         </div>
     </footer>
 
     <script src="js/app.js"></script>
+    <script>
+        // Acordeón del Temario
+        document.querySelectorAll('.temario-toggle').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const body = toggle.nextElementSibling;
+                const icon = toggle.querySelector('.temario-icon');
+                const isOpen = !body.classList.contains('hidden');
+
+                // Cerrar todos los demás
+                document.querySelectorAll('.temario-body').forEach(b => b.classList.add('hidden'));
+                document.querySelectorAll('.temario-icon').forEach(i => i.style.transform = '');
+
+                // Abrir/cerrar el actual
+                if (!isOpen) {
+                    body.classList.remove('hidden');
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

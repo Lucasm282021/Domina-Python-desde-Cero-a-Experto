@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Espacio de Aprendizaje | Dominio Python</title>
+    <title>Lección | Dominio Python</title>
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script>tailwind.config = { darkMode: 'class' }</script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- CodeMirror para el editor -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/theme/dracula.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.13/mode/python/python.min.js"></script>
-    
-    <!-- Pyodide para ejecución Python en Browser -->
     <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
-    
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Panel de Quiz */
+        .quiz-option { transition: all .15s; cursor: pointer; }
+        .quiz-option:hover { border-color: #3b82f6; background: rgba(59,130,246,.06); }
+        .quiz-option.selected  { border-color: #3b82f6; background: rgba(59,130,246,.1); }
+        .quiz-option.correct   { border-color: #10b981; background: rgba(16,185,129,.1); }
+        .quiz-option.incorrect { border-color: #ef4444; background: rgba(239,68,68,.1); }
+        /* Badge de progreso */
+        .step-badge { transition: all .3s; }
+        .step-badge.done   { background: #10b981; color:#fff; }
+        .step-badge.active { background: #3b82f6; color:#fff; }
+        .step-badge.locked { background: #e5e7eb; color:#9ca3af; }
+        .dark .step-badge.locked { background: #374151; color:#6b7280; }
+    </style>
 </head>
 <body class="bg-gray-50 text-gray-900 dark:bg-[#0f172a] dark:text-gray-100 transition-colors duration-300 h-screen flex flex-col overflow-hidden">
-    
-    <!-- Top Navbar Minimal -->
-    <nav class="glass border-b border-gray-200 dark:border-gray-800 shrink-0">
+
+    <!-- Navbar -->
+    <nav class="glass border-b border-gray-200 dark:border-gray-800 shrink-0 z-40">
         <div class="px-4 flex justify-between h-14 items-center">
             <div class="flex items-center gap-4">
                 <button id="toggle-sidebar" class="text-gray-500 hover:text-gray-800 dark:hover:text-gray-200">
@@ -32,13 +41,16 @@
                     <i class="fa-solid fa-arrow-left"></i> Volver a Cursos
                 </a>
             </div>
-            <div class="text-sm font-bold truncate md:w-auto w-1/3 text-center" id="lesson-title-nav">
-                Fundamentos de Python
+            <!-- Barra de progreso de la lección (3 pasos) -->
+            <div class="hidden sm:flex items-center gap-2 text-xs font-semibold">
+                <span id="step-theory" class="step-badge active px-3 py-1 rounded-full"><i class="fa-solid fa-book-open mr-1"></i>Teoría</span>
+                <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
+                <span id="step-quiz" class="step-badge locked px-3 py-1 rounded-full"><i class="fa-solid fa-circle-question mr-1"></i>Quiz</span>
+                <i class="fa-solid fa-chevron-right text-gray-300 text-xs"></i>
+                <span id="step-practice" class="step-badge locked px-3 py-1 rounded-full"><i class="fa-solid fa-code mr-1"></i>Práctica</span>
             </div>
-            <div class="flex items-center space-x-4">
-                <button id="mark-done-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded text-sm transition font-medium flex items-center gap-2">
-                    <i class="fa-solid fa-check"></i> Completado
-                </button>
+            <div class="flex items-center gap-3">
+                <span id="lesson-title-nav" class="text-sm font-bold truncate max-w-xs hidden md:block text-gray-700 dark:text-gray-300"></span>
                 <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
                     <i id="theme-icon" class="fa-solid fa-moon"></i>
                 </button>
@@ -46,88 +58,297 @@
         </div>
     </nav>
 
-    <!-- Main Content Area -->
+    <!-- Cuerpo principal -->
     <div class="flex flex-1 overflow-hidden">
-        
-        <!-- Sidebar Navigation -->
-        <aside id="sidebar" class="w-64 bg-white dark:bg-[#1e293b] border-r border-gray-200 dark:border-gray-800 overflow-y-auto transition-transform duration-300 shrink-0 transform translate-x-0 hidden md:block">
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 bg-white dark:bg-[#1e293b] border-r border-gray-200 dark:border-gray-800 overflow-y-auto shrink-0 hidden md:block">
             <div class="p-4" id="sidebar-content">
-                <!-- Injected via JS based on data/contenidos.json -->
                 <div class="animate-pulse space-y-4">
                     <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
                     <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                    <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
                 </div>
             </div>
         </aside>
 
-        <!-- Learn & Code Area -->
-        <main class="flex-1 flex flex-col md:flex-row overflow-hidden bg-white dark:bg-[#0f172a]">
-            
-            <!-- Theory Panel -->
-            <div class="w-full md:w-1/2 overflow-y-auto p-6 md:p-8 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800">
-                <div class="prose prose-lg dark:prose-invert max-w-none" id="theory-content">
-                    <!-- Placeholder content. Real app would fetch this based on the ID -->
-                    <span class="inline-block px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 rounded text-xs font-bold mb-4">Módulo 1</span>
-                    <h1 class="text-3xl font-extrabold mb-4">Fundamentos: Variables y Tipos</h1>
-                    <p class="text-lg text-gray-600 dark:text-gray-300 mb-4">
-                        Python es un lenguaje de programación con tipado dinámico. No necesitas declarar el tipo de una variable al momento de crearla.
-                    </p>
-                    <h2 class="text-xl font-bold mt-6 mb-2">Tipos Nativos</h2>
-                    <ul class="list-disc pl-5 mb-4 space-y-1">
-                        <li><strong>Enteros (int):</strong> <code>edad = 25</code></li>
-                        <li><strong>Flotantes (float):</strong> <code>pi = 3.1415</code></li>
-                        <li><strong>Cadenas (str):</strong> <code>nombre = "Ana"</code></li>
-                        <li><strong>Booleanos (bool):</strong> <code>es_mayor = True</code></li>
-                    </ul>
-                    <div class="bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-400 p-4 rounded my-6">
-                        <p class="text-sm">
-                            <i class="fa-solid fa-lightbulb text-yellow-500 mr-2"></i>
-                            <strong>Consejo:</strong> Usa <code>type(variable)</code> para conocer de qué tipo es ese dato bajo el capó.
-                        </p>
+        <!-- Área central — un solo contenedor que cambia de "paso" -->
+        <main class="flex-1 overflow-hidden flex flex-col">
+
+            <!-- ══════════════ PASO 1: TEORÍA + EDITOR ══════════════ -->
+            <div id="phase-theory" class="flex-1 flex flex-col md:flex-row overflow-hidden">
+
+                <!-- Panel teoría -->
+                <div class="w-full md:w-1/2 overflow-y-auto p-6 md:p-8 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0f172a]">
+                    <div class="prose prose-lg dark:prose-invert max-w-none" id="theory-content">
+                        <div class="animate-pulse space-y-4">
+                            <div class="h-8 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                            <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+                        </div>
+                    </div>
+                    <!-- Ejercicio sugerido -->
+                    <div id="exercise-box" class="hidden mt-8 p-5 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl">
+                        <h3 class="font-bold text-blue-700 dark:text-blue-300 mb-2"><i class="fa-solid fa-dumbbell mr-2"></i>Ejercicio de práctica</h3>
+                        <p id="exercise-desc" class="text-sm text-blue-800 dark:text-blue-200"></p>
+                    </div>
+                    <!-- Navegación + botón avanzar a quiz -->
+                    <div class="mt-10 flex justify-between items-center border-t border-gray-100 dark:border-gray-800 pt-6">
+                        <button id="btn-prev" class="text-gray-500 hover:text-blue-500 text-sm font-medium hidden">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Anterior
+                        </button>
+                        <div></div>
+                        <button id="btn-go-quiz" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition">
+                            Ir al Quiz <i class="fa-solid fa-circle-question"></i>
+                        </button>
                     </div>
                 </div>
-                
-                <div class="mt-10 flex justify-between items-center border-t border-gray-100 dark:border-gray-800 pt-6">
-                    <button id="btn-prev" class="text-gray-500 hover:text-blue-500 text-sm font-medium hidden"><i class="fa-solid fa-arrow-left"></i> Anterior</button>
-                    <div></div>
-                    <button id="btn-next" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 text-sm font-medium hidden">Siguiente <i class="fa-solid fa-arrow-right"></i></button>
+
+                <!-- Panel editor (Fase teoría — práctica guiada) -->
+                <div class="w-full md:w-1/2 flex flex-col bg-[#1e1e1e]">
+                    <div class="flex justify-between items-center px-4 py-2 bg-gray-800 border-b border-gray-700">
+                        <span class="text-gray-300 text-sm font-mono"><i class="fa-brands fa-python text-blue-400 mr-2"></i>main.py</span>
+                        <div class="flex gap-2 items-center">
+                            <span id="code-status-badge" class="hidden text-xs font-semibold px-2 py-1 rounded-full bg-emerald-800 text-emerald-200">
+                                <i class="fa-solid fa-check mr-1"></i>Ejecutado OK
+                            </span>
+                            <button id="reset-code-btn" class="text-gray-400 hover:text-white px-2 py-1 text-sm bg-gray-700 rounded" title="Restablecer código">
+                                <i class="fa-solid fa-rotate-right"></i>
+                            </button>
+                            <button id="run-code-btn" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1 flex items-center gap-2 rounded text-sm font-bold shadow transition">
+                                <i class="fa-solid fa-play"></i> Ejecutar
+                                <i id="pyodide-loader" class="fa-solid fa-circle-notch fa-spin hidden"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex-1 overflow-hidden relative" id="editor-wrapper">
+                        <textarea id="code-editor"># Escribe tu código aquí</textarea>
+                        <div id="loading-overlay" class="absolute inset-0 bg-[#1e1e1e]/90 flex flex-col items-center justify-center z-10">
+                            <i class="fa-brands fa-python text-5xl text-blue-400 mb-4 animate-pulse"></i>
+                            <p class="text-white font-mono text-sm" id="loading-text">Inicializando Motor Python...</p>
+                        </div>
+                    </div>
+                    <div class="h-1/3 bg-black border-t border-gray-800 flex flex-col">
+                        <div class="bg-gray-900 px-3 py-1 flex justify-between items-center text-xs text-gray-500 font-mono">
+                            <span>Terminal/Consola</span>
+                            <button id="clear-console" class="hover:text-white"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                        <pre id="console-output" class="p-3 text-sm font-mono text-gray-300 flex-1 overflow-y-auto whitespace-pre-wrap"></pre>
+                    </div>
                 </div>
             </div>
 
-            <!-- Code Editor Panel -->
-            <div class="w-full md:w-1/2 flex flex-col bg-[#1e1e1e]">
-                
-                <div class="flex justify-between items-center px-4 py-2 bg-gray-800 border-b border-gray-700">
-                    <span class="text-gray-300 text-sm font-mono"><i class="fa-brands fa-python text-blue-400 mr-2"></i>main.py</span>
-                    <div class="flex gap-2">
-                        <button id="reset-code-btn" class="text-gray-400 hover:text-white px-2 py-1 text-sm bg-gray-700 rounded transition" title="Restablecer código">
-                            <i class="fa-solid fa-rotate-right"></i>
+            <!-- ══════════════ PASO 2: QUIZ DE LECCIÓN ══════════════ -->
+            <div id="phase-quiz" class="hidden flex-1 overflow-y-auto p-6 bg-white dark:bg-[#0f172a]">
+                <div class="max-w-2xl mx-auto">
+                    <div class="mb-6 text-center">
+                        <span class="inline-block bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-bold px-3 py-1 rounded-full mb-3">Quiz de la Lección</span>
+                        <h2 id="lq-titulo" class="text-2xl font-extrabold text-gray-900 dark:text-white"></h2>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Necesitás al menos 60% para aprobar y avanzar a la práctica.</p>
+                    </div>
+                    <!-- Progreso del quiz -->
+                    <div class="flex items-center gap-3 mb-6">
+                        <span id="lq-counter" class="text-sm font-semibold text-gray-500">Pregunta 1 de 5</span>
+                        <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div id="lq-progress-bar" class="bg-blue-500 h-2 rounded-full transition-all" style="width:0%"></div>
+                        </div>
+                        <span id="lq-score-live" class="text-sm font-bold text-blue-600 dark:text-blue-400">0 pts</span>
+                    </div>
+                    <!-- Pregunta -->
+                    <div id="lq-container" class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 mb-4">
+                        <h3 id="lq-question" class="text-lg font-bold text-gray-900 dark:text-white mb-5"></h3>
+                        <div id="lq-options" class="space-y-3"></div>
+                        <!-- Feedback por pregunta -->
+                        <div id="lq-feedback" class="hidden mt-4 px-4 py-3 rounded-lg text-sm"></div>
+                    </div>
+                    <div class="flex justify-between">
+                        <button id="lq-btn-back" class="text-gray-500 hover:text-blue-500 text-sm font-medium flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-left"></i> Volver a Teoría
                         </button>
-                        <button id="run-code-btn" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1 flex items-center gap-2 rounded text-sm font-bold shadow transition relative">
-                            <i class="fa-solid fa-play"></i> Ejecutar
-                            <!-- Loading spinner -->
-                            <i id="pyodide-loader" class="fa-solid fa-circle-notch fa-spin hidden"></i>
+                        <button id="lq-btn-next" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-bold transition flex items-center gap-2">
+                            Confirmar <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    <!-- Resultado final del quiz -->
+                    <div id="lq-result" class="hidden mt-8 text-center bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
+                        <div id="lq-result-icon" class="text-6xl mb-4"></div>
+                        <h3 id="lq-result-title" class="text-2xl font-extrabold mb-2"></h3>
+                        <p id="lq-result-desc" class="text-gray-500 dark:text-gray-400 mb-6"></p>
+                        <div id="lq-score-display" class="text-5xl font-black text-blue-600 dark:text-blue-400 mb-6"></div>
+                        <div class="flex justify-center gap-3">
+                            <button id="lq-btn-retry" class="hidden border border-gray-300 dark:border-gray-600 px-5 py-2 rounded-lg font-bold hover:bg-gray-50 dark:hover:bg-gray-700 transition text-sm">
+                                <i class="fa-solid fa-rotate-right mr-1"></i> Reintentar Quiz
+                            </button>
+                            <button id="lq-btn-continue" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-lg font-bold transition text-sm">
+                                Ir a Práctica <i class="fa-solid fa-code ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══════════════ PASO 3: PRÁCTICA CON SIMULADOR ══════════════ -->
+            <div id="phase-practice" class="hidden flex-1 overflow-y-auto bg-white dark:bg-[#0f172a]">
+                <div class="max-w-4xl mx-auto p-6">
+                    <div class="mb-6 text-center">
+                        <span class="inline-block bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 text-xs font-bold px-3 py-1 rounded-full mb-3">Práctica con el Simulador</span>
+                        <h2 class="text-2xl font-extrabold text-gray-900 dark:text-white">Resolvé el problema</h2>
+                    </div>
+                    <!-- Enunciado del problema -->
+                    <div id="practice-problem-box" class="mb-5 rounded-2xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-900/20 p-5">
+                        <div class="flex items-center gap-2 mb-3">
+                            <i class="fa-solid fa-puzzle-piece text-emerald-500 text-lg"></i>
+                            <span class="font-bold text-emerald-800 dark:text-emerald-200 text-sm uppercase tracking-wide">Tu desafío</span>
+                            <button id="btn-new-problem" title="Obtener otro problema" class="ml-auto text-xs text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
+                                <i class="fa-solid fa-dice"></i> Otro problema
+                            </button>
+                        </div>
+                        <h3 id="practice-problem-title" class="text-base font-bold text-gray-900 dark:text-white mb-2"></h3>
+                        <div id="practice-problem-desc" class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed"></div>
+                        <div id="practice-problem-example" class="hidden mt-3 bg-gray-100 dark:bg-gray-800 rounded-lg p-3 font-mono text-xs text-gray-700 dark:text-gray-300"></div>
+                    </div>
+                    <!-- Estado de progreso -->
+                    <div id="lesson-gate-status" class="mb-4 px-4 py-2.5 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-700 flex items-center gap-3 text-sm">
+                        <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                        <span class="text-blue-800 dark:text-blue-200 font-medium">Quiz aprobado ✓ — Ahora escribí y ejecutá tu código correctamente para completar la lección.</span>
+                    </div>
+                    <!-- Editor de práctica -->
+                    <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-lg">
+                        <div class="flex justify-between items-center px-4 py-2 bg-gray-800 border-b border-gray-700">
+                            <span class="text-gray-300 text-sm font-mono"><i class="fa-brands fa-python text-blue-400 mr-2"></i>practica.py</span>
+                            <div class="flex gap-2 items-center">
+                                <span id="practice-status-badge" class="hidden text-xs font-semibold px-2 py-1 rounded-full bg-emerald-800 text-emerald-200">
+                                    <i class="fa-solid fa-check mr-1"></i>Código ejecutado
+                                </span>
+                                <button id="reset-practice-btn" class="text-gray-400 hover:text-white px-2 py-1 text-sm bg-gray-700 rounded" title="Restablecer código">
+                                    <i class="fa-solid fa-rotate-right"></i>
+                                </button>
+                                <button id="run-practice-btn" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1 flex items-center gap-2 rounded text-sm font-bold shadow transition">
+                                    <i class="fa-solid fa-play"></i> Ejecutar
+                                    <i id="practice-loader" class="fa-solid fa-circle-notch fa-spin hidden"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="bg-[#1e1e1e]" id="practice-editor-wrap">
+                            <textarea id="practice-editor"></textarea>
+                        </div>
+                        <div class="h-40 bg-black border-t border-gray-800 flex flex-col">
+                            <div class="bg-gray-900 px-3 py-1 flex justify-between items-center text-xs text-gray-500 font-mono">
+                                <span>Terminal / Consola</span>
+                                <button id="clear-practice-console" class="hover:text-white"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                            <pre id="practice-console" class="p-3 text-sm font-mono text-gray-300 flex-1 overflow-y-auto whitespace-pre-wrap"></pre>
+                        </div>
+                    </div>
+                    <!-- Botón completar lección -->
+                    <div class="mt-6 flex justify-between items-center">
+                        <button id="practice-btn-back" class="text-gray-500 hover:text-blue-500 text-sm font-medium flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-left"></i> Volver al Quiz
+                        </button>
+                        <button id="btn-complete-lesson" class="bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-6 py-3 rounded-xl font-bold text-sm cursor-not-allowed flex items-center gap-2" disabled>
+                            <i class="fa-solid fa-lock"></i> Ejecutá el código primero para completar la lección
                         </button>
                     </div>
                 </div>
+            </div>
 
-                <div class="flex-1 overflow-hidden relative" id="editor-wrapper">
-                    <textarea id="code-editor"># Escribe tu código aquí:&#10;nombre = "Estudiante"&#10;print(f"¡Hola {nombre}, bienvenido a Python Mastery!")&#10;&#10;# Prueba a ver de qué tipo es nombre:&#10;print(type(nombre))&#10;</textarea>
-                    
-                    <!-- Overlay while Pyodide is loading -->
-                    <div id="loading-overlay" class="absolute inset-0 bg-[#1e1e1e]/90 flex flex-col items-center justify-center z-10">
-                        <i class="fa-brands fa-python text-5xl text-blue-400 mb-4 animate-pulse"></i>
-                        <p class="text-white font-mono text-sm" id="loading-text">Inicializando Motor Python...</p>
+            <!-- ══════════════ PASO 4: EVALUACIÓN FINAL DE MÓDULO ══════════════ -->
+            <div id="phase-module-eval" class="hidden flex-1 overflow-y-auto p-6 bg-white dark:bg-[#0f172a]">
+                <div class="max-w-2xl mx-auto">
+                    <div class="mb-6 text-center">
+                        <span class="inline-block bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-bold px-3 py-1 rounded-full mb-3">Evaluación Final del Módulo</span>
+                        <h2 id="mq-titulo" class="text-2xl font-extrabold text-gray-900 dark:text-white"></h2>
+                        <p id="mq-desc" class="text-sm text-gray-500 dark:text-gray-400 mt-1"></p>
+                    </div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <span id="mq-counter" class="text-sm font-semibold text-gray-500"></span>
+                        <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                            <div id="mq-progress-bar" class="bg-purple-500 h-2 rounded-full transition-all" style="width:0%"></div>
+                        </div>
+                    </div>
+                    <div id="mq-container" class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 mb-4">
+                        <h3 id="mq-question" class="text-lg font-bold text-gray-900 dark:text-white mb-5"></h3>
+                        <div id="mq-options" class="space-y-3"></div>
+                        <div id="mq-feedback" class="hidden mt-4 px-4 py-3 rounded-lg text-sm"></div>
+                    </div>
+                    <div class="flex justify-end">
+                        <button id="mq-btn-next" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-bold transition flex items-center gap-2">
+                            Confirmar <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div id="mq-result" class="hidden mt-8 text-center bg-gray-50 dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700">
+                        <div id="mq-result-icon" class="text-6xl mb-4"></div>
+                        <h3 id="mq-result-title" class="text-2xl font-extrabold mb-2"></h3>
+                        <p id="mq-result-desc" class="text-gray-500 dark:text-gray-400 mb-2"></p>
+                        <div id="mq-score-display" class="text-5xl font-black text-purple-600 dark:text-purple-400 mb-6"></div>
+                        <div class="flex justify-center gap-3">
+                            <button id="mq-btn-retry" class="hidden border border-gray-300 dark:border-gray-600 px-5 py-2 rounded-lg font-bold hover:bg-gray-50 dark:hover:bg-gray-700 transition text-sm">
+                                <i class="fa-solid fa-rotate-right mr-1"></i> Reintentar Evaluación
+                            </button>
+                            <button id="mq-btn-challenge" class="hidden bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-bold transition text-sm">
+                                Ir al Desafío Final <i class="fa-solid fa-code ml-1"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="h-1/3 bg-black border-t border-gray-800 flex flex-col">
-                    <div class="bg-gray-900 px-3 py-1 flex justify-between items-center text-xs text-gray-500 font-mono">
-                        <span>Terminal/Consola</span>
-                        <button id="clear-console" class="hover:text-white"><i class="fa-solid fa-trash-can"></i></button>
+            <!-- ══════════════ PASO 5: DESAFÍO DE CÓDIGO DEL MÓDULO ══════════════ -->
+            <div id="phase-module-challenge" class="hidden flex-1 overflow-y-auto bg-white dark:bg-[#0f172a]">
+                <div class="max-w-4xl mx-auto p-6">
+                    <div class="mb-6 text-center">
+                        <span class="inline-block bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 text-xs font-bold px-3 py-1 rounded-full mb-3">Desafío Final del Módulo</span>
+                        <h2 id="mc-titulo" class="text-2xl font-extrabold text-gray-900 dark:text-white"></h2>
+                        <div id="mc-desc" class="text-sm text-gray-500 dark:text-gray-400 mt-2 max-w-lg mx-auto prose dark:prose-invert"></div>
                     </div>
-                    <pre id="console-output" class="p-3 text-sm font-mono text-gray-300 flex-1 overflow-y-auto whitespace-pre-wrap"></pre>
+                    <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-lg">
+                        <div class="flex justify-between items-center px-4 py-2 bg-gray-800 border-b border-gray-700">
+                            <span class="text-gray-300 text-sm font-mono"><i class="fa-brands fa-python text-yellow-400 mr-2"></i>desafio_modulo.py</span>
+                            <div class="flex gap-2 items-center">
+                                <span id="challenge-status-badge" class="hidden text-xs font-semibold px-2 py-1 rounded-full bg-emerald-800 text-emerald-200">
+                                    <i class="fa-solid fa-check mr-1"></i>Código ejecutado
+                                </span>
+                                <button id="reset-challenge-btn" class="text-gray-400 hover:text-white px-2 py-1 text-sm bg-gray-700 rounded">
+                                    <i class="fa-solid fa-rotate-right"></i>
+                                </button>
+                                <button id="run-challenge-btn" class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 px-4 py-1 flex items-center gap-2 rounded text-sm font-bold shadow transition">
+                                    <i class="fa-solid fa-play"></i> Ejecutar
+                                    <i id="challenge-loader" class="fa-solid fa-circle-notch fa-spin hidden"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="bg-[#1e1e1e]" style="height:300px;position:relative">
+                            <textarea id="challenge-editor"></textarea>
+                        </div>
+                        <div class="h-48 bg-black border-t border-gray-800 flex flex-col">
+                            <div class="bg-gray-900 px-3 py-1 flex justify-between items-center text-xs text-gray-500 font-mono">
+                                <span>Terminal/Consola</span>
+                                <button id="clear-challenge-console" class="hover:text-white"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                            <pre id="challenge-console" class="p-3 text-sm font-mono text-gray-300 flex-1 overflow-y-auto whitespace-pre-wrap"></pre>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-end">
+                        <button id="btn-complete-module" class="bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-6 py-3 rounded-xl font-bold text-sm cursor-not-allowed flex items-center gap-2" disabled>
+                            <i class="fa-solid fa-lock"></i> Completar Módulo (ejecutá el desafío primero)
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══════════════ PASO 6: MÓDULO COMPLETADO ══════════════ -->
+            <div id="phase-module-done" class="hidden flex-1 overflow-y-auto bg-white dark:bg-[#0f172a] flex items-center justify-center p-8">
+                <div class="text-center max-w-md">
+                    <div class="text-8xl mb-4">🏆</div>
+                    <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-3">¡Módulo Completado!</h2>
+                    <p id="module-done-msg" class="text-gray-500 dark:text-gray-400 mb-8 text-lg">Superaste el quiz y el desafío de código del módulo. ¡Excelente trabajo!</p>
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <a href="cursos.html" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-bold transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-arrow-right"></i> Siguiente Módulo
+                        </a>
+                        <a href="certificado.html" id="link-certificate" class="hidden border border-purple-400 text-purple-600 dark:text-purple-400 px-8 py-3 rounded-xl font-bold hover:bg-purple-50 dark:hover:bg-purple-900/20 transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-certificate"></i> Ver Certificado
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -136,170 +357,585 @@
 
     <script src="js/app.js"></script>
     <script src="js/progress.js"></script>
+    <script src="js/problems_data.js"></script>
+    <script src="js/quiz_data.js"></script>
     <script src="js/editor.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Sidebar logic
-            const toggleSidebar = document.getElementById('toggle-sidebar');
-            const sidebar = document.getElementById('sidebar');
-            toggleSidebar.addEventListener('click', () => {
-                sidebar.classList.toggle('hidden');
-                // Mobile layout fix
-                if (window.innerWidth < 768) {
-                    sidebar.classList.toggle('absolute');
-                    sidebar.classList.toggle('z-50');
-                    sidebar.classList.toggle('h-full');
-                }
-            });
+    document.addEventListener('DOMContentLoaded', async () => {
 
-            // Mark as done logic
-            const markDoneBtn = document.getElementById('mark-done-btn');
-            // Assuming current lesson based on URL param. For demo:
-            const urlParams = new URLSearchParams(window.location.search);
-            const currentLessonId = urlParams.get('id') || 'm1_l1';
-            
-            if (window.isLessonCompleted(currentLessonId)) {
-                markDoneBtn.classList.replace('bg-blue-600', 'bg-green-600');
-                markDoneBtn.innerHTML = '<i class="fa-solid fa-check-double"></i> Completada';
+        // ══════════════════ VARIABLES GLOBALES ══════════════════
+        const urlParams       = new URLSearchParams(window.location.search);
+        const currentLessonId = urlParams.get('id') || 'm1_l1';
+        let courseData, currentLessonObj, currentModuloObj, flatLessons, currentIndex;
+        let isLastLessonOfModule = false;
+        let lqCurrentQ = 0, lqScore = 0, lqAnswered = false;
+        let mqCurrentQ = 0, mqScore = 0, mqAnswered = false;
+        let pyodideReady = false;
+
+        // ══════════════════ HELPERS DE NAVEGACIÓN ENTRE FASES ══════════════════
+        const phases = ['phase-theory','phase-quiz','phase-practice','phase-module-eval','phase-module-challenge','phase-module-done'];
+        function showPhase(id) {
+            phases.forEach(p => document.getElementById(p).classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+            // Actualizar badges del header
+            const theory   = document.getElementById('step-theory');
+            const quiz     = document.getElementById('step-quiz');
+            const practice = document.getElementById('step-practice');
+            theory.className   = 'step-badge locked px-3 py-1 rounded-full';
+            quiz.className     = 'step-badge locked px-3 py-1 rounded-full';
+            practice.className = 'step-badge locked px-3 py-1 rounded-full';
+            if (id === 'phase-theory')   theory.className   = 'step-badge active px-3 py-1 rounded-full';
+            if (id === 'phase-quiz')     { theory.className = 'step-badge done px-3 py-1 rounded-full'; quiz.className = 'step-badge active px-3 py-1 rounded-full'; }
+            if (id === 'phase-practice') { theory.className = 'step-badge done px-3 py-1 rounded-full'; quiz.className = 'step-badge done px-3 py-1 rounded-full'; practice.className = 'step-badge active px-3 py-1 rounded-full'; }
+        }
+
+        // ══════════════════ SIDEBAR + TOGGLE ══════════════════
+        document.getElementById('toggle-sidebar').addEventListener('click', () => {
+            const sb = document.getElementById('sidebar');
+            sb.classList.toggle('hidden');
+        });
+
+        // ══════════════════ CARGAR DATOS DEL CURSO ══════════════════
+        try {
+            const res = await fetch('data/contenidos.json');
+            courseData = await res.json();
+        } catch(e) { console.error('Error cargando course data', e); return; }
+
+        // Encontrar lección y módulo actuales
+        flatLessons = [];
+        courseData.modulos.forEach(m => m.lecciones.forEach(l => flatLessons.push({...l, moduloId: m.id, moduloData: m})));
+        currentIndex = flatLessons.findIndex(l => l.id === currentLessonId);
+        if (currentIndex >= 0) {
+            currentLessonObj = flatLessons[currentIndex];
+            currentModuloObj = courseData.modulos.find(m => m.id === currentLessonObj.moduloId);
+        }
+
+        // ¿Es la última lección del módulo?
+        if (currentModuloObj) {
+            const lastLesson = currentModuloObj.lecciones[currentModuloObj.lecciones.length - 1];
+            isLastLessonOfModule = (lastLesson.id === currentLessonId);
+        }
+
+        // ══════════════════ TÍTULO ══════════════════
+        if (currentLessonObj) {
+            document.getElementById('lesson-title-nav').textContent = currentLessonObj.titulo;
+            document.title = `${currentLessonObj.titulo} | Dominio Python`;
+        }
+
+        // ══════════════════ SIDEBAR ══════════════════
+        const sidebarContent = document.getElementById('sidebar-content');
+        sidebarContent.innerHTML = '';
+        courseData.modulos.forEach(modulo => {
+            const section = document.createElement('div');
+            section.className = 'mb-5';
+            const isModDone = window.isModuleCompleted(modulo.id);
+            let lessonsHtml = modulo.lecciones.map(l => {
+                const isDone   = window.isLessonCompleted(l.id);
+                const isActive = l.id === currentLessonId;
+                const status   = window.getLessonStatus(l.id);
+                let icon;
+                if (isDone) icon = '<i class="fa-solid fa-circle-check text-emerald-500 text-xs flex-shrink-0"></i>';
+                else if (status === 'needs_code') icon = '<i class="fa-solid fa-code text-yellow-400 text-xs flex-shrink-0"></i>';
+                else if (status === 'needs_quiz') icon = '<i class="fa-solid fa-circle-question text-yellow-400 text-xs flex-shrink-0"></i>';
+                else icon = '<i class="fa-regular fa-circle text-xs text-gray-300 flex-shrink-0"></i>';
+                const activeClass = isActive ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 font-bold border-l-2 border-blue-500' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200';
+                return `<a href="${l.url}" class="block py-1.5 px-3 mb-1 text-sm rounded transition flex items-center gap-2 ${activeClass}">${icon}<span class="truncate">${l.titulo}</span></a>`;
+            }).join('');
+            const modIcon = isModDone ? '<i class="fa-solid fa-circle-check text-emerald-400 text-xs ml-1"></i>' : '';
+            section.innerHTML = `<h4 class="text-xs font-black uppercase text-gray-400 tracking-wider mb-2 px-3">${modulo.titulo.split(':')[0]}${modIcon}</h4><div class="space-y-0.5">${lessonsHtml}</div>`;
+            sidebarContent.appendChild(section);
+        });
+
+        // ══════════════════ CARGAR TEORÍA Y CÓDIGO INICIAL ══════════════════
+        if (currentLessonObj?.teoria_html) {
+            document.getElementById('theory-content').innerHTML = `
+                <span class="inline-block px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 rounded text-xs font-bold mb-4">${currentModuloObj?.titulo?.split(':')[0] || 'Módulo'}</span>
+                ${currentLessonObj.teoria_html}`;
+        }
+
+        // Botón anterior lección
+        const btnPrev = document.getElementById('btn-prev');
+        if (currentIndex > 0) {
+            btnPrev.classList.remove('hidden');
+            btnPrev.onclick = () => window.location.href = flatLessons[currentIndex - 1].url;
+        }
+
+        // ══════════════════ EDITOR PRINCIPAL (TEORÍA) ══════════════════
+        // Se inicializa en editor.js. Esperamos a que esté listo.
+        const trySetInitialCode = setInterval(() => {
+            if (window.codeMirrorEditor && currentLessonObj?.codigo_inicial) {
+                window.codeMirrorEditor.setValue(currentLessonObj.codigo_inicial);
+                clearInterval(trySetInitialCode);
             }
+        }, 100);
 
-            markDoneBtn.addEventListener('click', () => {
-                // Validación estricta: Si no está completada históricamente y no la ejecutó ahora
-                if (!window.isLessonCompleted(currentLessonId) && !window._practiceCompleted) {
-                    alert("¡Atención! Para marcar la lección como completada y poder avanzar, primero debes presionar 'Ejecutar' en el código de la derecha y asegurarte de que corra sin errores.");
-                    
-                    // Efecto visual para llamar la atención sobre el botón de ejecutar
-                    const runBtnDoc = document.getElementById("run-code-btn");
-                    if (runBtnDoc) {
-                        runBtnDoc.classList.add("ring-4", "ring-yellow-400", "scale-105");
-                        setTimeout(() => runBtnDoc.classList.remove("ring-4", "ring-yellow-400", "scale-105"), 1000);
-                    }
-                    return;
-                }
+        // Detectar cuando el código se ejecuta correctamente (fase teoría)
+        window._onCodeRan = (success) => {
+            const badge = document.getElementById('code-status-badge');
+            if (success) badge.classList.remove('hidden');
+        };
 
-                window.markLessonAsCompleted(currentLessonId);
-                markDoneBtn.classList.replace('bg-blue-600', 'bg-green-600');
-                markDoneBtn.innerHTML = '<i class="fa-solid fa-check-double"></i> Completada';
-                if (window.enableNextButtonFunc) window.enableNextButtonFunc();
+        // ══════════════════ BTN: IR A QUIZ ══════════════════
+        document.getElementById('btn-go-quiz').addEventListener('click', () => {
+            if (window.isLessonCompleted(currentLessonId)) {
+                // La lección ya está completada, ir directo a lo que corresponda
+                showPhase('phase-practice');
+                return;
+            }
+            initLessonQuiz();
+            showPhase('phase-quiz');
+        });
+
+        // ══════════════════ QUIZ DE LECCIÓN ══════════════════
+        const lessonQuizData = window.LESSON_QUIZZES?.[currentLessonId];
+
+        function initLessonQuiz() {
+            lqCurrentQ = 0; lqScore = 0; lqAnswered = false;
+            document.getElementById('lq-container').classList.remove('hidden');
+            document.getElementById('lq-result').classList.add('hidden');
+            document.getElementById('lq-btn-next').classList.remove('hidden');
+            if (lessonQuizData) {
+                document.getElementById('lq-titulo').textContent = lessonQuizData.titulo;
+                renderLQ();
+            }
+        }
+
+        function renderLQ() {
+            if (!lessonQuizData) return;
+            const q = lessonQuizData.preguntas[lqCurrentQ];
+            const total = lessonQuizData.preguntas.length;
+            document.getElementById('lq-counter').textContent = `Pregunta ${lqCurrentQ + 1} de ${total}`;
+            document.getElementById('lq-progress-bar').style.width = `${(lqCurrentQ / total) * 100}%`;
+            document.getElementById('lq-question').textContent = q.q;
+            document.getElementById('lq-feedback').classList.add('hidden');
+            lqAnswered = false;
+
+            const opts = document.getElementById('lq-options');
+            opts.innerHTML = '';
+            q.opts.forEach((opt, idx) => {
+                const div = document.createElement('div');
+                div.className = 'quiz-option flex items-center gap-3 p-4 border border-gray-200 dark:border-gray-600 rounded-xl';
+                div.dataset.idx = idx;
+                // Construir con DOM para que < > no se parseen como HTML
+                const letter = document.createElement('span');
+                letter.className = 'w-7 h-7 flex-shrink-0 flex items-center justify-center rounded-full border-2 border-current text-xs font-bold';
+                letter.textContent = String.fromCharCode(65 + idx);
+                const text = document.createElement('span');
+                text.className = 'text-sm';
+                text.textContent = opt;   // textContent escapa < > automáticamente
+                div.appendChild(letter);
+                div.appendChild(text);
+                div.addEventListener('click', () => {
+                    if (lqAnswered) return;
+                    opts.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+                    div.classList.add('selected');
+                });
+                opts.appendChild(div);
+            });
+            const btn = document.getElementById('lq-btn-next');
+            btn.textContent = lqCurrentQ === total - 1 ? 'Ver Resultado' : 'Confirmar';
+            btn.innerHTML += ' <i class="fa-solid fa-arrow-right"></i>';
+        }
+
+        document.getElementById('lq-btn-next').addEventListener('click', () => {
+            if (!lessonQuizData) { showPhase('phase-practice'); return; }
+            const selected = document.querySelector('#lq-options .quiz-option.selected');
+            if (!selected && !lqAnswered) { alert('Seleccioná una opción.'); return; }
+            if (lqAnswered) { advanceLQ(); return; }
+
+            const idx = parseInt(selected.dataset.idx);
+            const q   = lessonQuizData.preguntas[lqCurrentQ];
+            lqAnswered = true;
+
+            document.querySelectorAll('#lq-options .quiz-option').forEach(o => {
+                if (parseInt(o.dataset.idx) === q.correct) o.classList.add('correct');
+                else if (o.classList.contains('selected')) o.classList.add('incorrect');
             });
 
-            // Load Sidebar Content from JSON
-            try {
-                const response = await fetch('data/contenidos.json');
-                const data = await response.json();
-                const sidebarContent = document.getElementById('sidebar-content');
-                sidebarContent.innerHTML = ''; // clear loading
+            const fb = document.getElementById('lq-feedback');
+            if (idx === q.correct) {
+                lqScore++;
+                fb.className = 'mt-4 px-4 py-3 rounded-lg text-sm bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300';
+                fb.textContent = '✓ ¡Correcto!';
+            } else {
+                fb.className = 'mt-4 px-4 py-3 rounded-lg text-sm bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300';
+                fb.textContent = `✗ Incorrecto. La respuesta correcta es: "${q.opts[q.correct]}"`;
+            }
+            fb.classList.remove('hidden');
+            document.getElementById('lq-score-live').textContent = `${lqScore} pts`;
 
-                data.modulos.forEach(modulo => {
-                    const section = document.createElement('div');
-                    section.className = 'mb-6';
-                    let lessonsHtml = modulo.lecciones.map(l => {
-                        let isDone = window.isLessonCompleted(l.id);
-                        let isActive = currentLessonId === l.id;
-                        let activeClass = isActive ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 font-bold border-l-2 border-blue-500' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200';
-                        let icon = isDone ? '<i class="fa-solid fa-circle-check text-green-500 text-xs"></i>' : '<i class="fa-regular fa-circle text-xs text-gray-300"></i>';
-                        
-                        return `<a href="${l.url}" class="block py-1.5 px-3 mb-1 text-sm rounded transition flex items-center gap-2 ${activeClass}">
-                                    ${icon} <span class="truncate">${l.titulo}</span>
-                                </a>`;
-                    }).join('');
+            const btn = document.getElementById('lq-btn-next');
+            const isLast = lqCurrentQ === lessonQuizData.preguntas.length - 1;
+            btn.textContent = isLast ? 'Ver Resultado' : 'Siguiente';
+            btn.innerHTML += ' <i class="fa-solid fa-arrow-right"></i>';
+        });
 
-                    section.innerHTML = `
-                        <h4 class="text-xs font-black uppercase text-gray-400 tracking-wider mb-2 px-3">${modulo.titulo.split(':')[0]}</h4>
-                        <div class="space-y-1">
-                            ${lessonsHtml}
-                        </div>
-                    `;
-                    sidebarContent.appendChild(section);
-                });
-
-                // Dynamic theory content mapping
-                let currentLessonObj = null;
-                let currentModuloObj = null;
-
-                data.modulos.forEach(modulo => {
-                    modulo.lecciones.forEach(l => {
-                        if (l.id === currentLessonId) {
-                            currentLessonObj = l;
-                            currentModuloObj = modulo;
-                        }
-                    });
-                });
-
-                if (currentLessonObj && currentModuloObj) {
-                    const theoryContent = document.getElementById('theory-content');
-                    const lessonTitleNav = document.getElementById('lesson-title-nav');
-                    const moduloTag = currentModuloObj.titulo.split(':')[0];
-                    
-                    lessonTitleNav.innerText = currentLessonObj.titulo;
-                    
-                    if (currentLessonObj.teoria_html) {
-                        theoryContent.innerHTML = `
-                            <span class="inline-block px-2 py-1 bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300 rounded text-xs font-bold mb-4">${moduloTag}</span>
-                            ${currentLessonObj.teoria_html}
-                        `;
-                    }
-
-                    if (currentLessonObj.codigo_inicial) {
-                        const trySetCode = setInterval(() => {
-                            if (window.codeMirrorEditor) {
-                                window.codeMirrorEditor.setValue(currentLessonObj.codigo_inicial);
-                                clearInterval(trySetCode);
-                            }
-                        }, 100);
-                    }
+        function advanceLQ() {
+            lqCurrentQ++;
+            lqAnswered = false;
+            if (lqCurrentQ < lessonQuizData.preguntas.length) {
+                renderLQ();
+            } else {
+                // Mostrar resultado
+                const total = lessonQuizData.preguntas.length;
+                const pct   = Math.round((lqScore / total) * 100);
+                window.markLessonQuizPassed(currentLessonId, pct);
+                document.getElementById('lq-container').classList.add('hidden');
+                document.getElementById('lq-btn-next').classList.add('hidden');
+                document.getElementById('lq-result').classList.remove('hidden');
+                document.getElementById('lq-score-display').textContent = `${pct}%`;
+                if (pct >= 60) {
+                    document.getElementById('lq-result-icon').textContent  = '🎉';
+                    document.getElementById('lq-result-title').textContent = '¡Quiz Superado!';
+                    document.getElementById('lq-result-desc').textContent  = `Obtuviste ${lqScore} de ${total} respuestas correctas. ¡Ahora pasá a la práctica!`;
+                    document.getElementById('lq-btn-continue').classList.remove('hidden');
+                } else {
+                    document.getElementById('lq-result-icon').textContent  = '💪';
+                    document.getElementById('lq-result-title').textContent = 'Casi lo lográs';
+                    document.getElementById('lq-result-desc').textContent  = `Obtuviste ${pct}%. Necesitás al menos 60% para avanzar. ¡Repasá la teoría y volvé a intentarlo!`;
+                    document.getElementById('lq-btn-retry').classList.remove('hidden');
                 }
+            }
+        }
 
-                // Setup Navigation Buttons
-                let flatLessons = [];
-                data.modulos.forEach(modulo => {
-                    modulo.lecciones.forEach(l => {
-                        flatLessons.push(l);
-                    });
+        document.getElementById('lq-btn-retry').addEventListener('click', initLessonQuiz);
+        document.getElementById('lq-btn-continue').addEventListener('click', () => {
+            showPhase('phase-practice');
+            loadPracticeEditor();
+        });
+        document.getElementById('lq-btn-back').addEventListener('click', () => showPhase('phase-theory'));
+        document.getElementById('practice-btn-back').addEventListener('click', () => showPhase('phase-quiz'));
+
+        // ══════════════════ EDITOR DE PRÁCTICA ══════════════════
+        let practiceEditor = null;
+        let currentProblem = null;
+
+        function pickRandomProblem() {
+            const problems = window.LESSON_PROBLEMS?.[currentLessonId];
+            if (!problems || problems.length === 0) return null;
+            return problems[Math.floor(Math.random() * problems.length)];
+        }
+
+        function renderProblem(problem) {
+            if (!problem) return;
+            currentProblem = problem;
+            document.getElementById('practice-problem-title').textContent = problem.titulo;
+            document.getElementById('practice-problem-desc').innerHTML   = problem.descripcion;
+            if (problem.ejemplo) {
+                const ex = document.getElementById('practice-problem-example');
+                ex.textContent = problem.ejemplo;
+                ex.classList.remove('hidden');
+            }
+            // Cargar el código inicial del problema en el editor
+            if (practiceEditor) {
+                practiceEditor.setValue(problem.codigo_inicial || '# Tu solución aquí\n');
+                practiceEditor.refresh();
+            }
+        }
+
+        function loadPracticeEditor() {
+            const problem = pickRandomProblem();
+            const initialCode = problem?.codigo_inicial || currentLessonObj?.codigo_inicial || '# Escribí tu solución aquí\n';
+
+            if (!practiceEditor) {
+                practiceEditor = CodeMirror.fromTextArea(document.getElementById('practice-editor'), {
+                    mode: 'python', theme: 'dracula', lineNumbers: true, indentUnit: 4,
+                    matchBrackets: true, autoCloseBrackets: true
                 });
+                practiceEditor.setSize('100%', '280px');
+            }
+            practiceEditor.setValue(initialCode);
+            // Crítico: refresh() después de que el DOM es visible
+            setTimeout(() => { practiceEditor.refresh(); }, 50);
 
-                let currentIndex = flatLessons.findIndex(l => l.id === currentLessonId);
-                const btnPrev = document.getElementById('btn-prev');
-                const btnNext = document.getElementById('btn-next');
+            // Mostrar enunciado
+            renderProblem(problem);
+        }
 
-                if (currentIndex > 0) {
-                    btnPrev.classList.remove('hidden');
-                    btnPrev.onclick = () => window.location.href = flatLessons[currentIndex - 1].url;
-                }
-                
-                if (currentIndex >= 0 && currentIndex < flatLessons.length - 1) {
-                    btnNext.classList.remove('hidden');
-                    window.enableNextButtonFunc = () => {
-                        btnNext.classList.remove('opacity-50', 'cursor-not-allowed');
-                        btnNext.onclick = () => window.location.href = flatLessons[currentIndex + 1].url;
-                        btnNext.title = "";
-                    };
-                    if (window.isLessonCompleted(currentLessonId)) {
-                        window.enableNextButtonFunc();
-                    } else {
-                        btnNext.classList.add('opacity-50', 'cursor-not-allowed');
-                        btnNext.title = "Completa la lección primero";
-                    }
-                } else if (currentIndex === flatLessons.length - 1) {
-                    btnNext.classList.remove('hidden');
-                    btnNext.innerHTML = 'Ir a Evaluación <i class="fa-solid fa-clipboard-check"></i>';
-                    window.enableNextButtonFunc = () => {
-                        btnNext.classList.remove('opacity-50', 'cursor-not-allowed');
-                        btnNext.onclick = () => window.location.href = 'evaluaciones.html';
-                        btnNext.title = "";
-                    };
-                    if (window.isLessonCompleted(currentLessonId)) {
-                        window.enableNextButtonFunc();
-                    } else {
-                        btnNext.classList.add('opacity-50', 'cursor-not-allowed');
-                        btnNext.title = "Completa la lección primero";
-                    }
-                }
+        document.getElementById('btn-new-problem').addEventListener('click', () => {
+            const p = pickRandomProblem();
+            renderProblem(p);
+            document.getElementById('practice-console').innerHTML = '';
+            document.getElementById('practice-status-badge').classList.add('hidden');
+        });
 
-            } catch (e) {
-                console.error("Error loading sidebar", e);
+        document.getElementById('reset-practice-btn').addEventListener('click', () => {
+            if (confirm('¿Restablecer el código al estado inicial del problema?')) {
+                const code = currentProblem?.codigo_inicial || currentLessonObj?.codigo_inicial || '';
+                practiceEditor?.setValue(code);
+                practiceEditor?.refresh();
+                document.getElementById('practice-console').innerHTML = '';
             }
         });
+        document.getElementById('clear-practice-console').addEventListener('click', () => {
+            document.getElementById('practice-console').innerHTML = '';
+        });
+
+        document.getElementById('run-practice-btn').addEventListener('click', async () => {
+            if (!window.pyodideInstance) { alert('El motor Python aún no está listo, esperá un momento.'); return; }
+            const code = practiceEditor?.getValue() || '';
+            const output = document.getElementById('practice-console');
+            output.innerHTML = '';
+            const loader = document.getElementById('practice-loader');
+            loader.classList.remove('hidden');
+            let success = false;
+            try {
+                window.pyodideInstance.setStdout({ batched: (t) => output.innerHTML += escapeHtml(t) + '\n' });
+                window.pyodideInstance.setStderr({ batched: (t) => output.innerHTML += `<span class="text-red-400">${escapeHtml(t)}</span>\n` });
+                await window.pyodideInstance.runPythonAsync(code);
+                success = true;
+            } catch(err) {
+                output.innerHTML += `<span class="text-red-400 font-bold">Error:\n${escapeHtml(String(err))}</span>`;
+            } finally {
+                loader.classList.add('hidden');
+            }
+            if (success) {
+                document.getElementById('practice-status-badge').classList.remove('hidden');
+                window.markLessonCodeDone(currentLessonId);
+                unlockCompleteLesson();
+            }
+        });
+
+        function unlockCompleteLesson() {
+            const btn = document.getElementById('btn-complete-lesson');
+            btn.disabled = false;
+            btn.className = 'bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl font-bold text-sm transition flex items-center gap-2';
+            btn.innerHTML = '<i class="fa-solid fa-check-double"></i> Completar Lección y Avanzar';
+        }
+
+        // Si ya tenía el código ejecutado antes
+        if (window.getLessonCodeDone(currentLessonId)) {
+            setTimeout(unlockCompleteLesson, 100);
+        }
+
+        document.getElementById('btn-complete-lesson').addEventListener('click', () => {
+            if (!window.getLessonCodeDone(currentLessonId)) {
+                alert('Primero ejecutá el código sin errores.');
+                return;
+            }
+            window.markLessonAsCompleted(currentLessonId);
+
+            if (isLastLessonOfModule) {
+                // Verificar si ya completó el módulo antes
+                if (window.isModuleCompleted(currentModuloObj.id)) {
+                    goToNextAfterModule();
+                } else {
+                    initModuleQuiz();
+                    showPhase('phase-module-eval');
+                }
+            } else {
+                // Avanzar a la siguiente lección
+                if (currentIndex < flatLessons.length - 1) {
+                    window.location.href = flatLessons[currentIndex + 1].url;
+                }
+            }
+        });
+
+        // ══════════════════ QUIZ DE MÓDULO ══════════════════
+        const moduleQuizData = window.MODULE_QUIZZES?.[currentModuloObj?.id];
+
+        function initModuleQuiz() {
+            mqCurrentQ = 0; mqScore = 0; mqAnswered = false;
+            document.getElementById('mq-container').classList.remove('hidden');
+            document.getElementById('mq-result').classList.add('hidden');
+            document.getElementById('mq-btn-next').classList.remove('hidden');
+            if (moduleQuizData) {
+                document.getElementById('mq-titulo').textContent = moduleQuizData.titulo;
+                document.getElementById('mq-desc').textContent   = moduleQuizData.descripcion;
+                renderMQ();
+            }
+        }
+
+        function renderMQ() {
+            if (!moduleQuizData) return;
+            const q = moduleQuizData.preguntas[mqCurrentQ];
+            const total = moduleQuizData.preguntas.length;
+            document.getElementById('mq-counter').textContent = `Pregunta ${mqCurrentQ + 1} de ${total}`;
+            document.getElementById('mq-progress-bar').style.width = `${(mqCurrentQ / total) * 100}%`;
+            document.getElementById('mq-question').textContent = q.q;
+            document.getElementById('mq-feedback').classList.add('hidden');
+            mqAnswered = false;
+
+            const opts = document.getElementById('mq-options');
+            opts.innerHTML = '';
+            q.opts.forEach((opt, idx) => {
+                const div = document.createElement('div');
+                div.className = 'quiz-option flex items-center gap-3 p-4 border border-gray-200 dark:border-gray-600 rounded-xl';
+                div.dataset.idx = idx;
+                // Construir con DOM para que < > no se parseen como HTML
+                const letter = document.createElement('span');
+                letter.className = 'w-7 h-7 flex-shrink-0 flex items-center justify-center rounded-full border-2 border-current text-xs font-bold';
+                letter.textContent = String.fromCharCode(65 + idx);
+                const text = document.createElement('span');
+                text.className = 'text-sm';
+                text.textContent = opt;   // textContent escapa < > automáticamente
+                div.appendChild(letter);
+                div.appendChild(text);
+                div.addEventListener('click', () => {
+                    if (mqAnswered) return;
+                    opts.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+                    div.classList.add('selected');
+                });
+                opts.appendChild(div);
+            });
+            const btn = document.getElementById('mq-btn-next');
+            btn.innerHTML = (mqCurrentQ === total - 1 ? 'Ver Resultado' : 'Confirmar') + ' <i class="fa-solid fa-arrow-right"></i>';
+        }
+
+        document.getElementById('mq-btn-next').addEventListener('click', () => {
+            if (!moduleQuizData) { initModuleChallenge(); showPhase('phase-module-challenge'); return; }
+            const selected = document.querySelector('#mq-options .quiz-option.selected');
+            if (!selected && !mqAnswered) { alert('Seleccioná una opción.'); return; }
+            if (mqAnswered) { advanceMQ(); return; }
+
+            const idx = parseInt(selected.dataset.idx);
+            const q   = moduleQuizData.preguntas[mqCurrentQ];
+            mqAnswered = true;
+
+            document.querySelectorAll('#mq-options .quiz-option').forEach(o => {
+                if (parseInt(o.dataset.idx) === q.correct) o.classList.add('correct');
+                else if (o.classList.contains('selected')) o.classList.add('incorrect');
+            });
+
+            const fb = document.getElementById('mq-feedback');
+            if (idx === q.correct) {
+                mqScore++;
+                fb.className = 'mt-4 px-4 py-3 rounded-lg text-sm bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300';
+                fb.textContent = '✓ ¡Correcto!';
+            } else {
+                fb.className = 'mt-4 px-4 py-3 rounded-lg text-sm bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-300';
+                fb.textContent = `✗ Incorrecto. La respuesta correcta es: "${q.opts[q.correct]}"`;
+            }
+            fb.classList.remove('hidden');
+
+            const btn = document.getElementById('mq-btn-next');
+            btn.innerHTML = (mqCurrentQ === moduleQuizData.preguntas.length - 1 ? 'Ver Resultado' : 'Siguiente') + ' <i class="fa-solid fa-arrow-right"></i>';
+        });
+
+        function advanceMQ() {
+            mqCurrentQ++;
+            mqAnswered = false;
+            if (mqCurrentQ < moduleQuizData.preguntas.length) {
+                renderMQ();
+            } else {
+                const total = moduleQuizData.preguntas.length;
+                const pct   = Math.round((mqScore / total) * 100);
+                window.markModuleQuizPassed(currentModuloObj.id, pct);
+                document.getElementById('mq-container').classList.add('hidden');
+                document.getElementById('mq-btn-next').classList.add('hidden');
+                document.getElementById('mq-result').classList.remove('hidden');
+                document.getElementById('mq-score-display').textContent = `${pct}%`;
+                if (pct >= 60) {
+                    document.getElementById('mq-result-icon').textContent  = '🎉';
+                    document.getElementById('mq-result-title').textContent = '¡Evaluación Superada!';
+                    document.getElementById('mq-result-desc').textContent  = `Obtuviste ${mqScore} de ${total} respuestas correctas. Ahora completá el desafío de código del módulo.`;
+                    document.getElementById('mq-btn-challenge').classList.remove('hidden');
+                } else {
+                    document.getElementById('mq-result-icon').textContent  = '💪';
+                    document.getElementById('mq-result-title').textContent = 'Necesitás más práctica';
+                    document.getElementById('mq-result-desc').textContent  = `Obtuviste ${pct}%. Necesitás al menos 60% para avanzar. Repasá las lecciones del módulo.`;
+                    document.getElementById('mq-btn-retry').classList.remove('hidden');
+                }
+            }
+        }
+
+        document.getElementById('mq-btn-retry').addEventListener('click', initModuleQuiz);
+        document.getElementById('mq-btn-challenge').addEventListener('click', () => {
+            initModuleChallenge();
+            showPhase('phase-module-challenge');
+        });
+
+        // ══════════════════ DESAFÍO DE CÓDIGO DEL MÓDULO ══════════════════
+        let challengeEditor = null;
+
+        function initModuleChallenge() {
+            const challenge = moduleQuizData?.desafio;
+            if (!challenge) { goToNextAfterModule(); return; }
+            document.getElementById('mc-titulo').textContent = challenge.titulo;
+            document.getElementById('mc-desc').innerHTML    = challenge.descripcion;
+            if (!challengeEditor) {
+                challengeEditor = CodeMirror.fromTextArea(document.getElementById('challenge-editor'), {
+                    mode: 'python', theme: 'dracula', lineNumbers: true, indentUnit: 4,
+                    matchBrackets: true, autoCloseBrackets: true
+                });
+                challengeEditor.setSize('100%', '300px');
+            }
+            challengeEditor.setValue(challenge.codigo_inicial || '');
+        }
+
+        document.getElementById('reset-challenge-btn').addEventListener('click', () => {
+            if (confirm('¿Restablecer el desafío al código inicial?')) {
+                challengeEditor?.setValue(moduleQuizData?.desafio?.codigo_inicial || '');
+                document.getElementById('challenge-console').innerHTML = '';
+            }
+        });
+        document.getElementById('clear-challenge-console').addEventListener('click', () => {
+            document.getElementById('challenge-console').innerHTML = '';
+        });
+
+        document.getElementById('run-challenge-btn').addEventListener('click', async () => {
+            if (!window.pyodideInstance) { alert('El motor Python aún no está listo.'); return; }
+            const code = challengeEditor?.getValue() || '';
+            const output = document.getElementById('challenge-console');
+            output.innerHTML = '';
+            const loader = document.getElementById('challenge-loader');
+            loader.classList.remove('hidden');
+            let success = false;
+            try {
+                window.pyodideInstance.setStdout({ batched: (t) => output.innerHTML += escapeHtml(t) + '\n' });
+                window.pyodideInstance.setStderr({ batched: (t) => output.innerHTML += `<span class="text-red-400">${escapeHtml(t)}</span>\n` });
+                await window.pyodideInstance.runPythonAsync(code);
+                success = true;
+            } catch(err) {
+                output.innerHTML += `<span class="text-red-400 font-bold">Error:\n${escapeHtml(String(err))}</span>`;
+            } finally {
+                loader.classList.remove('hidden');
+                loader.classList.add('hidden');
+            }
+            if (success) {
+                document.getElementById('challenge-status-badge').classList.remove('hidden');
+                window.markModuleCodeDone(currentModuloObj.id);
+                unlockCompleteModule();
+            }
+        });
+
+        function unlockCompleteModule() {
+            const btn = document.getElementById('btn-complete-module');
+            btn.disabled  = false;
+            btn.className = 'bg-yellow-500 hover:bg-yellow-400 text-gray-900 px-6 py-3 rounded-xl font-bold text-sm transition flex items-center gap-2';
+            btn.innerHTML = '<i class="fa-solid fa-trophy"></i> ¡Completar Módulo!';
+        }
+
+        document.getElementById('btn-complete-module').addEventListener('click', () => {
+            if (!window.getModuleCodeDone(currentModuloObj.id)) {
+                alert('Primero ejecutá el desafío de código.');
+                return;
+            }
+            goToNextAfterModule();
+        });
+
+        function goToNextAfterModule() {
+            const modIdx = courseData.modulos.findIndex(m => m.id === currentModuloObj.id);
+            const isLastMod = modIdx === courseData.modulos.length - 1;
+            document.getElementById('module-done-msg').textContent =
+                isLastMod ? '¡Completaste todo el curso! Podés obtener tu certificado.' : `¡Superaste el Módulo ${modIdx+1}! Estás listo para el siguiente módulo.`;
+            if (isLastMod) document.getElementById('link-certificate').classList.remove('hidden');
+            showPhase('phase-module-done');
+        }
+
+        // ══════════════════ SI LA LECCIÓN YA ESTABA COMPLETA ══════════════════
+        if (window.isLessonCompleted(currentLessonId)) {
+            document.getElementById('step-theory').className = 'step-badge done px-3 py-1 rounded-full';
+            document.getElementById('step-quiz').className   = 'step-badge done px-3 py-1 rounded-full';
+            document.getElementById('step-practice').className = 'step-badge done px-3 py-1 rounded-full';
+        }
+
+        // ══════════════════ HELPER ══════════════════
+        function escapeHtml(text) {
+            return String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        }
+        window.escapeHtml = escapeHtml;
+    });
     </script>
 </body>
 </html>
