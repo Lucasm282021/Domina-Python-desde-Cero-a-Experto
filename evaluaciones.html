@@ -3,14 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluaciones | Dominio Python</title>
+    <title>Evaluaciones | Python Mastery</title>
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <script>tailwind.config = { darkMode: 'class' }</script>
+    <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { darkBg: '#0f172a' } } } }</script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .eval-card { transition: all .2s; }
+        .eval-card.locked { opacity: .55; cursor: not-allowed; }
+        .eval-card.locked:hover { transform: none !important; box-shadow: none !important; }
+        .eval-card.unlocked:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(59,130,246,.18); }
+        .eval-card.completed .status-ring { border-color: #10b981; }
+        .eval-card.unlocked  .status-ring { border-color: #3b82f6; }
+        .eval-card.locked    .status-ring { border-color: #9ca3af; }
+        .badge-score { font-variant-numeric: tabular-nums; }
+    </style>
 </head>
 <body class="bg-gray-50 text-gray-900 dark:bg-[#0f172a] dark:text-gray-100 transition-colors duration-300">
-    
+
     <!-- Navbar -->
     <nav class="sticky top-0 z-50 glass border-b border-gray-200 dark:border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
@@ -18,85 +28,201 @@
                 <i class="fa-brands fa-python text-3xl text-blue-500"></i>
                 <span class="font-bold text-xl hidden sm:block">Python<span class="text-blue-500">Mastery</span></span>
             </a>
-            <div class="flex items-center space-x-6">
-                <a href="cursos.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 font-medium text-sm"><i class="fa-solid fa-arrow-left"></i> Volver a Cursos</a>
+            <div class="flex items-center gap-5">
+                <a href="cursos.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 font-medium text-sm">
+                    <i class="fa-solid fa-arrow-left mr-1"></i> Volver a Cursos
+                </a>
                 <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                    <i id="theme-icon" class="fa-solid fa-moon text-gray-600 dark:text-gray-300"></i>
                 </button>
             </div>
         </div>
     </nav>
 
-    <main class="max-w-3xl mx-auto px-4 py-12 fade-in">
-        
+    <main class="max-w-4xl mx-auto px-4 py-12 fade-in">
+
+        <!-- Encabezado -->
         <div class="text-center mb-10">
-            <span class="inline-block px-3 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300 rounded-full text-xs font-bold mb-4">Módulo 1</span>
-            <h1 class="text-3xl font-extrabold mb-2">Evaluación de Fundamentos</h1>
-            <p class="text-gray-600 dark:text-gray-400">Demuestra tus conocimientos sobre variables, control de flujo y POO.</p>
+            <span class="inline-block px-3 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300 rounded-full text-xs font-bold mb-4">
+                <i class="fa-solid fa-clipboard-list mr-1"></i> Centro de Evaluaciones
+            </span>
+            <h1 class="text-3xl font-extrabold mb-2">Evaluaciones del Curso</h1>
+            <p class="text-gray-500 dark:text-gray-400 max-w-lg mx-auto">
+                Aquí encontrás las evaluaciones finales de cada módulo. Solo podés acceder a las evaluaciones de los módulos que ya has completado.
+            </p>
         </div>
 
-        <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 p-6 md:p-10 mb-8" id="quiz-container">
-            
-            <div id="quiz-header" class="flex justify-between items-center mb-8 pb-4 border-b border-gray-200 dark:border-gray-700">
-                <h2 class="text-lg font-bold" id="question-counter">Pregunta 1 de 5</h2>
-                <div class="text-sm font-mono text-gray-500">Tiempo estimado: 5 min</div>
+        <!-- Barra de progreso global -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-5 mb-8 shadow-sm">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">Progreso total del curso</span>
+                <span id="global-progress-text" class="text-sm font-bold text-blue-600 dark:text-blue-400 badge-score">0%</span>
             </div>
-
-            <div id="quiz-body">
-                <h3 class="text-xl font-bold mb-6" id="question-text">¿Cual de las siguientes NO es una palabra reservada en Python?</h3>
-                
-                <div class="space-y-3" id="options-container">
-                    <label class="block cursor-pointer">
-                        <div class="flex items-center p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition">
-                            <input type="radio" name="answer" value="a" class="w-5 h-5 text-blue-600">
-                            <span class="ml-3 text-gray-700 dark:text-gray-200 font-mono">def</span>
-                        </div>
-                    </label>
-                    <label class="block cursor-pointer">
-                        <div class="flex items-center p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition">
-                            <input type="radio" name="answer" value="b" class="w-5 h-5 text-blue-600">
-                            <span class="ml-3 text-gray-700 dark:text-gray-200 font-mono">while</span>
-                        </div>
-                    </label>
-                    <label class="block cursor-pointer">
-                        <div class="flex items-center p-4 border border-blue-500 bg-blue-50 dark:bg-blue-900/20 rounded-lg transition">
-                            <input type="radio" name="answer" value="c" checked class="w-5 h-5 text-blue-600">
-                            <span class="ml-3 text-gray-700 dark:text-gray-200 font-mono">function</span>
-                        </div>
-                    </label>
-                    <label class="block cursor-pointer">
-                        <div class="flex items-center p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition">
-                            <input type="radio" name="answer" value="d" class="w-5 h-5 text-blue-600">
-                            <span class="ml-3 text-gray-700 dark:text-gray-200 font-mono">class</span>
-                        </div>
-                    </label>
-                </div>
-            </div>
-
-            <div class="mt-8 flex justify-end">
-                <button id="next-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-bold transition flex items-center gap-2">
-                    Siguiente Pregunta <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </div>
-            
-        </div>
-        
-        <!-- Results Modal (Hidden default) -->
-        <div id="results-panel" class="hidden text-center bg-white dark:bg-[#1e293b] rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 p-8">
-            <i class="fa-solid fa-trophy text-6xl text-yellow-500 mb-4"></i>
-            <h2 class="text-3xl font-bold mb-2">¡Evaluación Completada!</h2>
-            <p class="text-gray-600 dark:text-gray-400 mb-6">Tu puntuación es:</p>
-            <div class="text-5xl font-black text-blue-600 dark:text-blue-400 mb-8" id="final-score">80%</div>
-            
-            <div class="flex justify-center gap-4">
-                <a href="evaluaciones.html" class="px-6 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 font-bold hover:bg-gray-50 dark:hover:bg-gray-700 transition">Reintentar</a>
-                <a href="certificado.html" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-lg font-bold transition flex items-center gap-2">Ver Certificado <i class="fa-solid fa-certificate"></i></a>
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                <div id="global-progress-bar" class="h-2.5 rounded-full bg-blue-500 transition-all" style="width:0%"></div>
             </div>
         </div>
 
+        <!-- Grid de tarjetas de evaluación -->
+        <div id="eval-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-12"></div>
+
+        <!-- Info de acceso -->
+        <div class="flex items-start gap-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-xl p-4 text-sm text-blue-800 dark:text-blue-200">
+            <i class="fa-solid fa-circle-info text-blue-400 mt-0.5 flex-shrink-0"></i>
+            <p>Las evaluaciones de módulos bloqueados se desbloquearán automáticamente cuando completes todas las lecciones de ese módulo, apruebes el quiz interno y resuelvas el desafío de código.</p>
+        </div>
     </main>
 
     <script src="js/app.js"></script>
-    <script src="js/quiz.js"></script>
+    <script src="js/progress.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+
+        // ── Cargar estructura del curso ────────────────────────────────────────
+        const res    = await fetch('data/contenidos.json');
+        const data   = await res.json();
+        const modulos = data.modulos;
+
+        // ── Calcular estado de cada módulo ─────────────────────────────────────
+        // Un módulo está "disponible para evaluar" cuando TODAS sus lecciones
+        // están completadas (quiz lección + código lección).
+        // Un módulo está "completado" cuando además el quiz de módulo y el
+        // desafío de módulo fueron aprobados.
+
+        function allLessonsDone(modulo) {
+            return modulo.lecciones.every(l => window.isLessonCompleted(l.id));
+        }
+
+        const modStates = modulos.map(m => {
+            const lessonsOk  = allLessonsDone(m);
+            const modDone    = window.isModuleCompleted(m.id);
+            const quizScore  = window.getModuleQuizScore(m.id);
+            const codeDone   = window.getModuleCodeDone(m.id);
+            return {
+                modulo:    m,
+                lessonsOk, // lecciones completadas → puede acceder a la evaluación
+                modDone,   // evaluación completa (quiz módulo + desafío)
+                quizScore,
+                codeDone
+            };
+        });
+
+        // ── Actualizar barra de progreso ───────────────────────────────────────
+        const totalLessons = modulos.reduce((acc, m) => acc + m.lecciones.length, 0);
+        let   doneLessons  = 0;
+        modulos.forEach(m => m.lecciones.forEach(l => {
+            if (window.isLessonCompleted(l.id)) doneLessons++;
+        }));
+        const pct = totalLessons === 0 ? 0 : Math.round((doneLessons / totalLessons) * 100);
+        document.getElementById('global-progress-text').textContent  = `${pct}%`;
+        document.getElementById('global-progress-bar').style.width   = `${pct}%`;
+        if (pct >= 80) document.getElementById('global-progress-bar').classList.replace('bg-blue-500', 'bg-emerald-500');
+
+        // ── Renderizar tarjetas ────────────────────────────────────────────────
+        const grid = document.getElementById('eval-grid');
+
+        modStates.forEach(({ modulo, lessonsOk, modDone, quizScore, codeDone }, idx) => {
+
+            const card = document.createElement('div');
+
+            // Estado visual
+            let stateClass, stateIcon, stateLabel, stateBg, actionHTML;
+
+            if (modDone) {
+                stateClass = 'completed';
+                stateIcon  = 'fa-trophy text-emerald-500';
+                stateLabel = 'Evaluación aprobada';
+                stateBg    = 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800';
+                const score = quizScore !== null ? `${quizScore}%` : '—';
+                actionHTML = `
+                    <div class="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Completada · ${score}</span>
+                    </div>
+                `;
+            } else if (lessonsOk) {
+                stateClass = 'unlocked';
+                stateIcon  = 'fa-clipboard-check text-blue-500';
+                stateLabel = quizScore !== null ? `Último intento: ${quizScore}% — Necesitás 60%` : 'Lista para rendir';
+                stateBg    = 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700';
+                actionHTML = `
+                    <a href="leccion.html?id=${modulo.lecciones[modulo.lecciones.length - 1].id}&phase=module-eval"
+                       class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-4 py-2 rounded-lg transition">
+                        ${quizScore !== null ? '<i class="fa-solid fa-rotate-right"></i> Reintentar' : '<i class="fa-solid fa-play"></i> Comenzar evaluación'}
+                    </a>
+                `;
+            } else {
+                stateClass = 'locked';
+                stateIcon  = 'fa-lock text-gray-400';
+                stateLabel = 'Completá todas las lecciones del módulo primero';
+                stateBg    = 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700';
+
+                // Progreso interno de lecciones
+                const lessDone = modulo.lecciones.filter(l => window.isLessonCompleted(l.id)).length;
+                const lessTotal = modulo.lecciones.length;
+                actionHTML = `
+                    <div class="w-full">
+                        <div class="flex justify-between text-xs text-gray-500 mb-1">
+                            <span>Lecciones completadas</span>
+                            <span>${lessDone}/${lessTotal}</span>
+                        </div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+                            <div class="h-1.5 rounded-full bg-gray-400" style="width:${Math.round(lessDone/lessTotal*100)}%"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Colores de número de módulo
+            const numColors = ['blue','purple','emerald','orange','rose'];
+            const col = numColors[idx % numColors.length];
+
+            card.className = `eval-card ${stateClass} rounded-2xl border ${stateBg} p-6 shadow-sm flex flex-col gap-4`;
+            card.innerHTML = `
+                <div class="flex items-start gap-4">
+                    <!-- Número del módulo -->
+                    <div class="status-ring w-12 h-12 flex-shrink-0 rounded-xl border-2 flex items-center justify-center font-black text-lg text-${col}-600 dark:text-${col}-400 bg-${col}-50 dark:bg-${col}-900/30">
+                        ${idx + 1}
+                    </div>
+                    <!-- Info -->
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 flex-wrap mb-1">
+                            <span class="text-xs font-bold uppercase tracking-wide text-gray-400">Módulo ${idx + 1}</span>
+                            <span class="text-xs px-2 py-0.5 rounded-full ${
+                                modDone ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300' :
+                                lessonsOk ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300' :
+                                'bg-gray-100 text-gray-500 dark:bg-gray-700 dark:text-gray-400'} font-semibold">
+                                ${modDone ? '✓ Completado' : lessonsOk ? 'Disponible' : '🔒 Bloqueado'}
+                            </span>
+                        </div>
+                        <h2 class="font-bold text-gray-900 dark:text-white text-base leading-snug">${modulo.titulo.replace(/Módulo \d+: /, '')}</h2>
+                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-0.5">${stateLabel}</p>
+                    </div>
+                    <i class="fa-solid ${stateIcon} text-xl flex-shrink-0 mt-1"></i>
+                </div>
+
+                <!-- Badges de sub-progreso -->
+                <div class="flex flex-wrap gap-2">
+                    ${modulo.lecciones.map(l => {
+                        const done = window.isLessonCompleted(l.id);
+                        return `<span class="text-xs px-2 py-0.5 rounded-full font-medium ${done ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300' : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-500'}">${l.titulo.length > 20 ? l.titulo.substring(0,18)+'…' : l.titulo}</span>`;
+                    }).join('')}
+                </div>
+
+                <!-- Acción -->
+                <div class="pt-2 border-t border-gray-100 dark:border-gray-700">
+                    ${actionHTML}
+                </div>
+            `;
+
+            // Las tarjetas bloqueadas no son clicables
+            if (stateClass === 'locked') {
+                card.addEventListener('click', e => e.preventDefault());
+            }
+
+            grid.appendChild(card);
+        });
+    });
+    </script>
 </body>
 </html>

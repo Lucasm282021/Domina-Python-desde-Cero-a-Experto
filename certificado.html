@@ -3,90 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certificado de Finalización</title>
+    <title>Certificado de Finalización | Python Mastery</title>
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script>tailwind.config = { darkMode: 'class' }</script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- html2pdf for printing certificate -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans h-screen flex flex-col justify-center items-center p-4">
-    
-    <div class="mb-6 flex gap-4">
-        <a href="cursos.html" class="cursor-pointer bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-4 py-2 rounded shadow hover:bg-gray-300 transition">
-            Volver a inicio
-        </a>
-        <button id="download-btn" class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow transition flex items-center gap-2 font-bold">
-            <i class="fa-solid fa-download"></i> Descargar PDF
-        </button>
-    </div>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans min-h-screen flex flex-col">
 
-    <!-- Contenedor del diploma -->
-    <div id="certificate" class="relative w-full max-w-4xl bg-white text-gray-900 border-[10px] border-double border-blue-800 p-12 shadow-2xl aspect-[1.414/1] flex flex-col justify-between" style="background-image: radial-gradient(circle, #ffffff 0%, #f1f5f9 100%);">
-        
-        <!-- Marcas de agua -->
-        <i class="fa-brands fa-python absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[300px] text-gray-100 opacity-30 pointer-events-none"></i>
-
-        <div class="text-center z-10 relative mt-4">
-            <div class="flex justify-center items-center mb-4">
-                <i class="fa-brands fa-python text-5xl text-blue-600 mr-3"></i>
-                <h1 class="text-2xl font-black uppercase tracking-widest text-gray-800">Python Mastery</h1>
+    <!-- ═══ PANEL DE BLOQUEO (visible si el curso no está completo) ═══ -->
+    <div id="locked-panel" class="hidden flex-1 flex flex-col items-center justify-center p-6 min-h-screen">
+        <div class="max-w-xl w-full bg-white dark:bg-gray-800 rounded-3xl shadow-2xl p-10 text-center border border-gray-100 dark:border-gray-700">
+            <!-- Icono -->
+            <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                <i class="fa-solid fa-lock text-4xl text-gray-400"></i>
             </div>
-            
-            <h2 class="text-4xl mt-8 font-serif italic text-gray-600">Certificado de Finalización</h2>
-            <p class="text-lg mt-6 text-gray-500 uppercase tracking-widest">Concedido a</p>
-            
-            <div class="my-6 border-b-2 border-gray-300 mx-auto w-3/4 pb-2">
-                <p class="text-5xl font-bold text-blue-900" id="student-name">Nombre del Estudiante</p>
-            </div>
-
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed mt-4">
-                Por haber completado con éxito todos los módulos y evaluaciones del curso <strong>"Dominio Profesional de Python: De Cero a Experto"</strong>.
+            <h1 class="text-2xl font-extrabold text-gray-900 dark:text-white mb-3">Certificado no disponible</h1>
+            <p class="text-gray-500 dark:text-gray-400 mb-8">
+                Debés completar <strong>todos los módulos</strong> del curso — incluyendo el quiz,<br>
+                el desafío de código y la evaluación final — para obtener tu certificado.
             </p>
+
+            <!-- Barra de progreso global -->
+            <div class="mb-8">
+                <div class="flex justify-between text-sm font-semibold text-gray-600 dark:text-gray-400 mb-2">
+                    <span>Tu progreso actual</span>
+                    <span id="cert-pct-text">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
+                    <div id="cert-progress-bar" class="h-3 rounded-full bg-blue-500 transition-all" style="width:0%"></div>
+                </div>
+            </div>
+
+            <!-- Lista de módulos con estado -->
+            <div id="cert-modules-list" class="space-y-3 text-left mb-8"></div>
+
+            <a href="cursos.html"
+               class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl transition">
+                <i class="fa-solid fa-arrow-left"></i> Continuar aprendiendo
+            </a>
+        </div>
+    </div>
+
+    <!-- ═══ PANEL DEL CERTIFICADO (visible solo si el curso está completo) ═══ -->
+    <div id="cert-panel" class="hidden flex-col items-center justify-center py-8 px-4">
+
+        <div class="mb-6 flex gap-4">
+            <a href="cursos.html"
+               class="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-4 py-2 rounded shadow hover:bg-gray-300 transition">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Volver a Cursos
+            </a>
+            <button id="download-btn"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow transition flex items-center gap-2 font-bold">
+                <i class="fa-solid fa-download"></i> Descargar PDF
+            </button>
         </div>
 
-        <div class="flex justify-between items-end px-12 pb-4 z-10 relative w-full">
-            <div class="text-center border-t border-gray-400 pt-2 w-48">
-                <p class="font-bold text-gray-800 font-signature text-xl">Lucas Dev</p>
-                <p class="text-xs text-gray-500 uppercase mt-1">Instructor Principal</p>
+        <!-- Diploma -->
+        <div id="certificate"
+             class="relative w-full max-w-4xl bg-white text-gray-900 border-[10px] border-double border-blue-800 p-12 shadow-2xl aspect-[1.414/1] flex flex-col justify-between"
+             style="background-image: radial-gradient(circle, #ffffff 0%, #f1f5f9 100%);">
+
+            <!-- Marca de agua -->
+            <i class="fa-brands fa-python absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[300px] text-gray-100 opacity-30 pointer-events-none"></i>
+
+            <div class="text-center z-10 relative mt-4">
+                <div class="flex justify-center items-center mb-4">
+                    <i class="fa-brands fa-python text-5xl text-blue-600 mr-3"></i>
+                    <h1 class="text-2xl font-black uppercase tracking-widest text-gray-800">Python Mastery</h1>
+                </div>
+
+                <h2 class="text-4xl mt-8 font-serif italic text-gray-600">Certificado de Finalización</h2>
+                <p class="text-lg mt-6 text-gray-500 uppercase tracking-widest">Concedido a</p>
+
+                <div class="my-6 border-b-2 border-gray-300 mx-auto w-3/4 pb-2">
+                    <p class="text-5xl font-bold text-blue-900" id="student-name">Estudiante</p>
+                </div>
+
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed mt-4">
+                    Por haber completado con éxito todos los módulos y evaluaciones del curso
+                    <strong>"Dominio Profesional de Python: De Cero a Experto"</strong>.
+                </p>
             </div>
-            <div class="text-center bg-blue-50 border border-blue-200 rounded-full p-4 shadow-inner">
-                <img src="https://img.icons8.com/color/96/python--v1.png" alt="Python Logo" class="w-16 h-16 opacity-80" />
-            </div>
-            <div class="text-center border-t border-gray-400 pt-2 w-48">
-                <p class="font-bold text-gray-800" id="date-label">15 Abril 2026</p>
-                <p class="text-xs text-gray-500 uppercase mt-1">Fecha de Emisión</p>
+
+            <div class="flex justify-between items-end px-12 pb-4 z-10 relative w-full">
+                <div class="text-center border-t border-gray-400 pt-2 w-48">
+                    <p class="font-bold text-gray-800 text-xl">Lucas Montero</p>
+                    <p class="text-xs text-gray-500 uppercase mt-1">Instructor Principal</p>
+                </div>
+                <div class="text-center bg-blue-50 border border-blue-200 rounded-full p-4 shadow-inner">
+                    <img src="https://img.icons8.com/color/96/python--v1.png" alt="Python Logo" class="w-16 h-16 opacity-80">
+                </div>
+                <div class="text-center border-t border-gray-400 pt-2 w-48">
+                    <p class="font-bold text-gray-800" id="date-label">—</p>
+                    <p class="text-xs text-gray-500 uppercase mt-1">Fecha de Emisión</p>
+                </div>
             </div>
         </div>
     </div>
 
+    <script src="js/progress.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const studentNameStr = localStorage.getItem('python_student_name') || prompt("Ingresa tu nombre para el certificado:") || "Estudiante Dedicado";
-            document.getElementById('student-name').innerText = studentNameStr;
-            localStorage.setItem('python_student_name', studentNameStr);
+    document.addEventListener('DOMContentLoaded', async () => {
 
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('date-label').innerText = new Date().toLocaleDateString('es-ES', options);
+        // ── Cargar estructura del curso ────────────────────────────────────────
+        const res      = await fetch('data/contenidos.json');
+        const data     = await res.json();
+        const modulos  = data.modulos;
+
+        // ── Verificar si TODOS los módulos están completados ───────────────────
+        const modStates = modulos.map(m => ({
+            id:        m.id,
+            titulo:    m.titulo,
+            done:      window.isModuleCompleted(m.id),
+            quizScore: window.getModuleQuizScore(m.id),
+            codeDone:  window.getModuleCodeDone(m.id)
+        }));
+
+        const totalMod    = modStates.length;
+        const completedMod = modStates.filter(m => m.done).length;
+        const allDone     = completedMod === totalMod;
+
+        if (allDone) {
+            // ── Mostrar certificado ───────────────────────────────────────────
+            document.getElementById('cert-panel').classList.remove('hidden');
+            document.getElementById('cert-panel').classList.add('flex');
+
+            const name = localStorage.getItem('python_student_name')
+                      || prompt('Ingresá tu nombre para el certificado:')
+                      || 'Estudiante Dedicado';
+            document.getElementById('student-name').textContent = name;
+            localStorage.setItem('python_student_name', name);
+
+            const opts = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('date-label').textContent =
+                new Date().toLocaleDateString('es-ES', opts);
 
             document.getElementById('download-btn').addEventListener('click', () => {
-                const element = document.getElementById('certificate');
+                const el  = document.getElementById('certificate');
                 const opt = {
-                    margin:       0,
-                    filename:     'Certificado_Python.pdf',
-                    image:        { type: 'jpeg', quality: 0.98 },
-                    html2canvas:  { scale: 2, useCORS: true },
-                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+                    margin:      0,
+                    filename:    'Certificado_Python_Mastery.pdf',
+                    image:       { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true },
+                    jsPDF:       { unit: 'in', format: 'letter', orientation: 'landscape' }
                 };
-
-                // Removemos la sombra al exportar
-                element.classList.remove('shadow-2xl');
-                html2pdf().set(opt).from(element).save().then(() => {
-                    element.classList.add('shadow-2xl');
-                });
+                el.classList.remove('shadow-2xl');
+                html2pdf().set(opt).from(el).save().then(() => el.classList.add('shadow-2xl'));
             });
-        });
+
+        } else {
+            // ── Mostrar panel de bloqueo ──────────────────────────────────────
+            document.getElementById('locked-panel').classList.remove('hidden');
+            document.getElementById('locked-panel').classList.add('flex');
+
+            const pct = Math.round((completedMod / totalMod) * 100);
+            document.getElementById('cert-pct-text').textContent   = `${pct}%`;
+            document.getElementById('cert-progress-bar').style.width = `${pct}%`;
+
+            // Cambiar color de barra según progreso
+            const bar = document.getElementById('cert-progress-bar');
+            if (pct >= 80)      bar.classList.replace('bg-blue-500', 'bg-emerald-500');
+            else if (pct >= 40) bar.classList.replace('bg-blue-500', 'bg-yellow-500');
+
+            // Lista de módulos con check/cruz
+            const list = document.getElementById('cert-modules-list');
+            modStates.forEach((m, i) => {
+                const div = document.createElement('div');
+                div.className = `flex items-center gap-3 p-3 rounded-xl border ${
+                    m.done
+                        ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-800'
+                        : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700'
+                }`;
+
+                const icon = m.done
+                    ? '<i class="fa-solid fa-circle-check text-emerald-500 text-lg w-5"></i>'
+                    : '<i class="fa-solid fa-circle-xmark text-gray-400 text-lg w-5"></i>';
+
+                const quizBadge = m.quizScore !== null
+                    ? `<span class="text-xs px-2 py-0.5 rounded-full font-semibold ${m.quizScore >= 60 ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300' : 'bg-red-100 text-red-600 dark:bg-red-900 dark:text-red-300'}">Quiz: ${m.quizScore}%</span>`
+                    : `<span class="text-xs px-2 py-0.5 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-500">Quiz pendiente</span>`;
+
+                const codeBadge = m.codeDone
+                    ? `<span class="text-xs px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300 font-semibold">Desafío ✓</span>`
+                    : `<span class="text-xs px-2 py-0.5 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-500">Desafío pendiente</span>`;
+
+                div.innerHTML = `
+                    ${icon}
+                    <div class="flex-1 min-w-0">
+                        <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">Módulo ${i+1}</p>
+                    </div>
+                    <div class="flex gap-2 flex-wrap justify-end">
+                        ${quizBadge}
+                        ${codeBadge}
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+    });
     </script>
 </body>
 </html>
