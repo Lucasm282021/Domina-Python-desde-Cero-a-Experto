@@ -1,0 +1,137 @@
+{
+  "modulos": [
+    {
+      "id": "modulo_1",
+      "titulo": "Módulo 1: Dominio de Python 'Puro' (Core)",
+      "descripcion": "Aprende las bases sólidas del lenguaje Python.",
+      "lecciones": [
+        {
+          "id": "m1_l1",
+          "titulo": "Fundamentos y Tipos de Datos",
+          "url": "leccion.html?id=m1_l1",
+          "teoria_html": "\n            <h1 class='text-3xl font-extrabold mb-4'>Fundamentos: Variables y Tipos Nativos</h1>\n             <p class='mb-4 text-gray-700 dark:text-gray-400'>\n                En Python, todo es un objeto. A diferencia de lenguajes de tipado estático (como C o Java), Python utiliza un <strong>tipado dinámico y fuerte</strong>. Esto significa que no necesitas declarar de qué tipo será una variable antes de usarla, pero una vez asignada, Python es estricto con las operaciones permitidas.\n            </p>\n            <h2 class='text-xl font-bold mt-6 mb-2'>1. Asignación de Variables</h2>\n            <p class='mb-2 text-gray-700 dark:text-gray-400'>\n                Las variables se crean en el momento en que les asignas un valor mediante el operador <code>=</code>. No existen palabras clave previas como <code>var</code>, <code>let</code> o <code>const</code>.\n            </p>\n            <pre class='bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 font-mono text-sm'>\nnombre = \"Guido\"\ncreador = True\naño = 1991</pre>\n            <h2 class='text-xl font-bold mt-6 mb-2'>2. Los Tipos de Datos Principales (Primitivos)</h2>\n            <ul class='list-disc pl-5 mb-4 space-y-2 text-gray-700 dark:text-gray-300'>\n                <li><strong>Enteros (<code>int</code>):</strong> Representan números enteros, positivos o negativos, sin decimales. Su tamaño está limitado únicamente por la memoria disponible.<br><code class='bg-gray-200 dark:bg-gray-700 px-1 py-0.5 rounded'>x = 1000000</code></li>\n                <li><strong>Flotantes (<code>float</code>):</strong> Representan números reales con precisión de coma flotante de doble precisión (64 bits).<br><code class='bg-gray-200 dark:bg-gray-700 px-1 py-0.5 rounded'>pi = 3.14159265</code></li>\n                <li><strong>Cadenas de texto (<code>str</code>):</strong> Secuencias inmutables de caracteres Unicode. Se pueden definir con comillas simples o dobles.<br><code class='bg-gray-200 dark:bg-gray-700 px-1 py-0.5 rounded'>saludo = 'Hola Mundo'</code></li>\n                <li><strong>Booleanos (<code>bool</code>):</strong> Subtipo de enteros que solo pueden tomar dos valores: <code>True</code> o <code>False</code>. Se usan extensamente en el control de flujo.<br><code class='bg-gray-200 dark:bg-gray-700 px-1 py-0.5 rounded'>es_activo = True</code></li>\n            </ul>\n            <h2 class='text-xl font-bold mt-6 mb-2'>3. La función type()</h2>\n            <p class='mb-4 text-gray-700 dark:text-gray-400'>\n                Debido a la naturaleza dinámica de Python, a menudo necesitarás comprobar a qué clase pertenece una variable. Para esto utilizamos la función integrada <code>type()</code>.\n            </p>\n            <div class='bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-400 p-4 rounded my-6'>\n                <p class='text-sm'>\n                    <i class='fa-solid fa-circle-info text-blue-500 mr-2'></i>\n                    <strong>Dinamismo en acción:</strong> Una variable que es de tipo <code>int</code> puede pasar a ser <code>str</code> si se le reasigna un nuevo valor. Sin embargo, no puedes concatenar un <code>int</code> con un <code>str</code> directamente, demostrando su tipado fuerte.\n                </p>\n            </div>\n        ",
+          "codigo_inicial": "# -- Práctica Módulo 1: Lección 1 --\n# 1. Crea una variable con tu edad (entero)\n\n# 2. Crea una variable con tu nombre (texto)\n\n# 3. Imprime por pantalla el tipo de tu edad usando la función type()\n\nprint(\"Mi código funciona!\")\n"
+        },
+        {
+          "id": "m1_l2",
+          "titulo": "Control de Flujo",
+          "url": "leccion.html?id=m1_l2",
+          "teoria_html": "\n            <h1 class='text-3xl font-extrabold mb-4'>Control de Flujo: If, For y While</h1>\n             <p class='mb-4 text-gray-700 dark:text-gray-400'>\n                El control de flujo define en qué orden se ejecutan las instrucciones de tu código. Python logra esto con una legibilidad famosa, gracias al uso obligatorio de la <strong>indentación</strong> en lugar de llaves <code>{}</code>.\n            </p>\n            <h2 class='text-xl font-bold mt-6 mb-2'>1. Condicionales: if, elif, else</h2>\n            <p class='mb-2 text-gray-700 dark:text-gray-400'>\n                Permiten bifurcar el flujo del programa dependiendo de si una condición booleana se evalúa como <code>True</code> o <code>False</code>.\n            </p>\n            <pre class='bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 font-mono text-sm leading-relaxed text-gray-800 dark:text-gray-300'>\nedad = 18\nif edad &gt;= 18:\n    print(\"Eres mayor de edad\")\nelif edad == 17:\n    print(\"Estás a punto de ser mayor de edad\")\nelse:\n    print(\"Eres menor de edad\")\n</pre>\n            <h2 class='text-xl font-bold mt-6 mb-2'>2. Bucle For (Iteración)</h2>\n            <p class='mb-2 text-gray-700 dark:text-gray-400'>\n                En Python, el bucle <code>for</code> iterará siempre sobre los elementos de cualquier secuencia (como una lista o un string), en el orden en que aparecen. No es el típico bucle \"para i = 0 hasta 10\" de otros lenguajes. Si necesitas una progresión numérica, utilizas la función generadora <code>range()</code>.\n            </p>\n            <pre class='bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 font-mono text-sm leading-relaxed text-gray-800 dark:text-gray-300'>\n# Bucle usando range (Genera del 0 al 4)\nfor i in range(5):\n    print(\"Iteración:\", i)\n\n# Iterando una colección\nfrutas = ['manzana', 'platano', 'cereza']\nfor fruta in frutas:\n    print(fruta)\n</pre>\n            <h2 class='text-xl font-bold mt-6 mb-2'>3. Bucle While (Condición continua)</h2>\n            <p class='mb-2 text-gray-700 dark:text-gray-400'>\n                Ejecuta un bloque de código repetidamente mientras una condición sea verdadera.\n            </p>\n            <div class='bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-400 p-4 rounded my-6'>\n                <p class='text-sm'>\n                    <i class='fa-solid fa-triangle-exclamation text-yellow-500 mr-2'></i>\n                    <strong>Precaución con bucles infinitos:</strong> Asegúrate de que la condición dentro del <code>while</code> cambie en algún momento a <code>False</code>, o de usar la instrucción <code>break</code>, de lo contrario colgarás el programa.\n                </p>\n            </div>\n        ",
+          "codigo_inicial": "# -- Práctica Módulo 1: Lección 2 --\n# Tarea: Usa un bucle for y la función range() para imprimir los números del 1 al 10\n\nfor numero in range(1, 11):\n    pass # Borra 'pass' y escribe tu código aquí\n\n"
+        },
+        {
+          "id": "m1_l3",
+          "titulo": "Funciones y Scope",
+          "url": "leccion.html?id=m1_l3",
+          "teoria_html": "\n            <h1 class='text-3xl font-extrabold mb-4'>Funciones y Scope</h1>\n             <p class='mb-4 text-gray-700 dark:text-gray-400'>\n                Las funciones son la piedra angular de la reutilización de código (principio DRY: Don't Repeat Yourself). En Python se definen utilizando la palabra reservada <code>def</code>.\n            </p>\n            <h2 class='text-xl font-bold mt-6 mb-2'>Definición y Argumentos</h2>\n            <p class='mb-2 text-gray-700 dark:text-gray-400'>\n                Las funciones pueden aceptar cero o múltiples argumentos. Puedes definir valores por defecto en los parámetros, lo que hace que dicho argumento sea opcional.\n            </p>\n            <pre class='bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 font-mono text-sm leading-relaxed text-gray-800 dark:text-gray-300'>\ndef presentar_trabajador(nombre, puesto=\"Desarrollador Junior\"):\n    '''Esta es una docstring. Documenta qué hace la función.'''\n    return f\"{nombre} trabaja como {puesto}\"\n\nprint(presentar_trabajador(\"Laura\")) # Usa puesto por defecto\nprint(presentar_trabajador(\"Carlos\", \"Data Scientist\")) # Sobreescribe el puesto\n</pre>\n            <h2 class='text-xl font-bold mt-6 mb-2'>Valores de Retorno Múltiples</h2>\n            <p class='mb-2 text-gray-700 dark:text-gray-400'>\n                Una característica estelar de Python es que una función puede retornar múltiples valores separándolos por comas. Lo que devuelve implícitamente es una \"Tupla\", que luego se desempaca.\n            </p>\n            <pre class='bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 font-mono text-sm leading-relaxed text-gray-800 dark:text-gray-300'>\ndef operaciones(a, b):\n    suma = a + b\n    resta = a - b\n    return suma, resta\n\nres_suma, res_resta = operaciones(10, 5)\n</pre>\n            <h2 class='text-xl font-bold mt-6 mb-2'>El Alcance (Scope) Local vs Global</h2>\n            <p class='mb-4 text-gray-700 dark:text-gray-400'>\n                Las variables creadas dentro de una función solo existen allí (Scope Local). Si necesitas modificar una variable de fuera, debes inyectarla o usar la palabra reservada <code>global</code> (una práctica poco recomendada debido a los efectos colaterales).\n            </p>\n        ",
+          "codigo_inicial": "# -- Práctica Módulo 1: Lección 3 --\n# Define una función llamada 'saludar' que acepte un parámetro 'nombre' \n# y devuelva el texto 'Hola, [nombre]'. Imprime el retorno al final.\n\ndef saludar(nombre):\n    pass\n\n"
+        },
+        {
+          "id": "m1_l4",
+          "titulo": "Programación Orientada a Objetos",
+          "url": "leccion.html?id=m1_l4",
+          "teoria_html": "\n            <h1 class='text-3xl font-extrabold mb-4'>Programación Orientada a Objetos</h1>\n             <p class='mb-4 text-gray-700 dark:text-gray-400'>\n                La Programación Orientada a Objetos (POO) es un paradigma de programación que provee un medio de estructurar el código de manera que propiedades y comportamientos estén empaquetados en contenedores individuales llamados \"Objetos\".\n            </p>\n            <h2 class='text-xl font-bold mt-6 mb-2'>Clases y Atributos de Instancia</h2>\n            <p class='mb-2 text-gray-700 dark:text-gray-400'>\n                Una clase actúa como el molde o plano. Utilizando la clase, creas copias independientes o 'instancias'. En Python, el inicializador fundamental es el método especial (o \"mágico\") <code>__init__</code>.\n            </p>\n            <pre class='bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 font-mono text-sm leading-relaxed text-gray-800 dark:text-gray-300'>\nclass Coche:\n    # Constructor de la clase\n    def __init__(self, marca, modelo):\n        self.marca = marca\n        self.modelo = modelo\n        self.encendido = False\n    \n    # Método (comportamiento de la clase)\n    def arrancar(self):\n        self.encendido = True\n        return f\"El {self.marca} está encendido.\"\n\n# Creación del objeto (instanciación)\nmi_auto = Coche(\"Toyota\", \"Corolla\")\nprint(mi_auto.arrancar())\n</pre>\n            <h2 class='text-xl font-bold mt-6 mb-2'>El factor \"self\"</h2>\n            <p class='mb-2 text-gray-700 dark:text-gray-400'>\n                Habrás notado que cada método tiene como primer argumento <code>self</code>. Esta es la referencia a la instancia temporal del objeto. Es el equivalente a <code>this</code> en Java o JavaScript, con la diferencia de que en Python debe escribirse explícitamente como parámetro.\n            </p>\n            <h2 class='text-xl font-bold mt-6 mb-2'>Herencia</h2>\n            <p class='mb-4 text-gray-700 dark:text-gray-400'>\n                Se pueden crear clases que tomen comportamientos de otra clase padre. Esto fomenta el reuso de código altamente. Se denota como: <code>class CocheDeportivo(Coche):</code>\n            </p>\n        ",
+          "codigo_inicial": "class Mascota:\n    def __init__(self, nombre):\n        self.nombre = nombre\n\n    def hacer_sonido(self):\n        return \"...\"\n\n# Crea una clase Perro que herede de Mascota\n# y sobreescriba 'hacer_sonido' para que retorne '¡Guau!'\n\n\n\n"
+        },
+        {
+          "id": "m1_l5",
+          "titulo": "Manejo de Errores",
+          "url": "leccion.html?id=m1_l5",
+          "teoria_html": "\n            <h1 class='text-3xl font-extrabold mb-4'>Manejo de Errores (Excepciones)</h1>\n             <p class='mb-4 text-gray-700 dark:text-gray-400'>\n                Los programas reales experimentan comportamientos o entradas de datos no esperadas que provocarían que colapsen por completo. Para evitarlo, Python utiliza bloques <code>try/except</code> (Equivalente al <code>try/catch</code> de otros lenguajes).\n            </p>\n            <h2 class='text-xl font-bold mt-6 mb-2'>La Estructura Completa</h2>\n            <p class='mb-2 text-gray-700 dark:text-gray-400'>\n                Puedes prepararte para fallos específicos para responder de la mejor forma a cada eventualidad.\n            </p>\n            <pre class='bg-gray-100 dark:bg-gray-800 p-4 rounded mb-4 font-mono text-sm leading-relaxed text-gray-800 dark:text-gray-300'>\ntry:\n    # Código crítico que puede fallar\n    resultado = 10 / 0\nexcept ZeroDivisionError as e:\n    # Solo atrapa divisiones por cero\n    print(\"¡No puedes dividir entre cero!\", e)\nexcept FileNotFoundError:\n    # Atrapa errores al abrir archivos inexistentes\n    print(\"Archivo no encontrado\")\nelse:\n    # Se ejecuta SI NO OCURRIÓ NINGÚN ERROR\n    print(\"El código funcionó perfectamente\")\nfinally:\n    # Siempre se ejecuta (haya fallado o no). Ideal para liberar recursos.\n    print(\"Terminado.\")\n</pre>\n            <h2 class='text-xl font-bold mt-6 mb-2'>EAFP: \"Es mejor pedir perdón que permiso\"</h2>\n            <p class='mb-4 text-gray-700 dark:text-gray-400'>\n                En el diseño de Python, prevalece el \"Easier to Ask for Forgiveness than Permission (EAFP)\" frente al enfoque de mirar antes de saltar (LBYL). Se prefiere intentar la lectura directa y rodear la estructura en un control <code>try/except</code> que construir múltiples <code>if x != 0</code> antes de proceder.\n            </p>\n        ",
+          "codigo_inicial": "# Corrige este código envolviéndolo en un bloque try y except para\n# evitar que la División por cero crashee el programa. \n# En el except, imprime un mensaje de error amigable.\n\nnumero = 10\ndivisor = 0\nresultado = numero / divisor\nprint(resultado)\n"
+        }
+      ]
+    },
+    {
+      "id": "modulo_2",
+      "titulo": "Módulo 2: Entorno y Herramientas",
+      "descripcion": "Prepara tu entorno de trabajo profesional.",
+      "lecciones": [
+        {
+          "id": "m2_l1",
+          "titulo": "Entornos Virtuales (venv, conda)",
+          "url": "leccion.html?id=m2_l1",
+          "teoria_html": "\n                <h1 class='text-3xl font-extrabold mb-4'>Entornos Virtuales (venv, conda)</h1>\n                <p class='text-lg text-gray-600 dark:text-gray-300 mb-4'>\n                    Sección teórica interactiva. Los conceptos avanzados de <strong>entornos virtuales (venv, conda)</strong> del entorno profesional son detallados en los módulos de suscripción avanzada o en próximas actualizaciones del temario. ¡Sigue superando tus metas!\n                </p>\n                <div class='bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-400 p-4 rounded my-6'>\n                    <p class='text-sm'><i class='fa-solid fa-lightbulb text-yellow-500 mr-2'></i> <strong>Consejo:</strong> Usa el editor para repasar libremente.</p>\n                </div>\n            ",
+          "codigo_inicial": "# Explora y repasa libremente Entornos Virtuales (venv, conda)\n"
+        },
+        {
+          "id": "m2_l2",
+          "titulo": "Git y Control de Versiones",
+          "url": "leccion.html?id=m2_l2",
+          "teoria_html": "\n                <h1 class='text-3xl font-extrabold mb-4'>Git y Control de Versiones</h1>\n                <p class='text-lg text-gray-600 dark:text-gray-300 mb-4'>\n                    Sección teórica interactiva. Los conceptos avanzados de <strong>git y control de versiones</strong> del entorno profesional son detallados en los módulos de suscripción avanzada o en próximas actualizaciones del temario. ¡Sigue superando tus metas!\n                </p>\n                <div class='bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-400 p-4 rounded my-6'>\n                    <p class='text-sm'><i class='fa-solid fa-lightbulb text-yellow-500 mr-2'></i> <strong>Consejo:</strong> Usa el editor para repasar libremente.</p>\n                </div>\n            ",
+          "codigo_inicial": "# Explora y repasa libremente Git y Control de Versiones\n"
+        }
+      ]
+    },
+    {
+      "id": "modulo_3",
+      "titulo": "Módulo 3: Bases de Datos",
+      "descripcion": "Conecta e interactúa con bases de datos relacionales.",
+      "lecciones": [
+        {
+          "id": "m3_l1",
+          "titulo": "Introducción a SQL",
+          "url": "leccion.html?id=m3_l1",
+          "teoria_html": "\n                <h1 class='text-3xl font-extrabold mb-4'>Introducción a SQL</h1>\n                <p class='text-lg text-gray-600 dark:text-gray-300 mb-4'>\n                    Sección teórica interactiva. Los conceptos avanzados de <strong>introducción a sql</strong> del entorno profesional son detallados en los módulos de suscripción avanzada o en próximas actualizaciones del temario. ¡Sigue superando tus metas!\n                </p>\n                <div class='bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-400 p-4 rounded my-6'>\n                    <p class='text-sm'><i class='fa-solid fa-lightbulb text-yellow-500 mr-2'></i> <strong>Consejo:</strong> Usa el editor para repasar libremente.</p>\n                </div>\n            ",
+          "codigo_inicial": "# Explora y repasa libremente Introducción a SQL\n"
+        },
+        {
+          "id": "m3_l2",
+          "titulo": "Integración con Python (SQLite/SQLAlchemy)",
+          "url": "leccion.html?id=m3_l2",
+          "teoria_html": "\n                <h1 class='text-3xl font-extrabold mb-4'>Integración con Python (SQLite/SQLAlchemy)</h1>\n                <p class='text-lg text-gray-600 dark:text-gray-300 mb-4'>\n                    Sección teórica interactiva. Los conceptos avanzados de <strong>integración con python (sqlite/sqlalchemy)</strong> del entorno profesional son detallados en los módulos de suscripción avanzada o en próximas actualizaciones del temario. ¡Sigue superando tus metas!\n                </p>\n                <div class='bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-400 p-4 rounded my-6'>\n                    <p class='text-sm'><i class='fa-solid fa-lightbulb text-yellow-500 mr-2'></i> <strong>Consejo:</strong> Usa el editor para repasar libremente.</p>\n                </div>\n            ",
+          "codigo_inicial": "# Explora y repasa libremente Integración con Python (SQLite/SQLAlchemy)\n"
+        }
+      ]
+    },
+    {
+      "id": "modulo_4",
+      "titulo": "Módulo 4: Rutas de Especialización",
+      "descripcion": "Elige tu camino: Web, Datos o Scripting.",
+      "lecciones": [
+        {
+          "id": "m4_l1",
+          "titulo": "Desarrollo Web (FastAPI, Django)",
+          "url": "leccion.html?id=m4_l1",
+          "teoria_html": "\n                <h1 class='text-3xl font-extrabold mb-4'>Desarrollo Web (FastAPI, Django)</h1>\n                <p class='text-lg text-gray-600 dark:text-gray-300 mb-4'>\n                    Sección teórica interactiva. Los conceptos avanzados de <strong>desarrollo web (fastapi, django)</strong> del entorno profesional son detallados en los módulos de suscripción avanzada o en próximas actualizaciones del temario. ¡Sigue superando tus metas!\n                </p>\n                <div class='bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-400 p-4 rounded my-6'>\n                    <p class='text-sm'><i class='fa-solid fa-lightbulb text-yellow-500 mr-2'></i> <strong>Consejo:</strong> Usa el editor para repasar libremente.</p>\n                </div>\n            ",
+          "codigo_inicial": "# Explora y repasa libremente Desarrollo Web (FastAPI, Django)\n"
+        },
+        {
+          "id": "m4_l2",
+          "titulo": "Data Science (NumPy, Pandas)",
+          "url": "leccion.html?id=m4_l2",
+          "teoria_html": "\n                <h1 class='text-3xl font-extrabold mb-4'>Data Science (NumPy, Pandas)</h1>\n                <p class='text-lg text-gray-600 dark:text-gray-300 mb-4'>\n                    Sección teórica interactiva. Los conceptos avanzados de <strong>data science (numpy, pandas)</strong> del entorno profesional son detallados en los módulos de suscripción avanzada o en próximas actualizaciones del temario. ¡Sigue superando tus metas!\n                </p>\n                <div class='bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-400 p-4 rounded my-6'>\n                    <p class='text-sm'><i class='fa-solid fa-lightbulb text-yellow-500 mr-2'></i> <strong>Consejo:</strong> Usa el editor para repasar libremente.</p>\n                </div>\n            ",
+          "codigo_inicial": "# Explora y repasa libremente Data Science (NumPy, Pandas)\n"
+        },
+        {
+          "id": "m4_l3",
+          "titulo": "Automatización y Web Scraping",
+          "url": "leccion.html?id=m4_l3",
+          "teoria_html": "\n                <h1 class='text-3xl font-extrabold mb-4'>Automatización y Web Scraping</h1>\n                <p class='text-lg text-gray-600 dark:text-gray-300 mb-4'>\n                    Sección teórica interactiva. Los conceptos avanzados de <strong>automatización y web scraping</strong> del entorno profesional son detallados en los módulos de suscripción avanzada o en próximas actualizaciones del temario. ¡Sigue superando tus metas!\n                </p>\n                <div class='bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-400 p-4 rounded my-6'>\n                    <p class='text-sm'><i class='fa-solid fa-lightbulb text-yellow-500 mr-2'></i> <strong>Consejo:</strong> Usa el editor para repasar libremente.</p>\n                </div>\n            ",
+          "codigo_inicial": "# Explora y repasa libremente Automatización y Web Scraping\n"
+        }
+      ]
+    },
+    {
+      "id": "modulo_5",
+      "titulo": "Módulo 5: Algoritmos y Clean Code",
+      "descripcion": "Escribe código profesional y mantenible.",
+      "lecciones": [
+        {
+          "id": "m5_l1",
+          "titulo": "Principios Clean Code y PEP 8",
+          "url": "leccion.html?id=m5_l1",
+          "teoria_html": "\n                <h1 class='text-3xl font-extrabold mb-4'>Principios Clean Code y PEP 8</h1>\n                <p class='text-lg text-gray-600 dark:text-gray-300 mb-4'>\n                    Sección teórica interactiva. Los conceptos avanzados de <strong>principios clean code y pep 8</strong> del entorno profesional son detallados en los módulos de suscripción avanzada o en próximas actualizaciones del temario. ¡Sigue superando tus metas!\n                </p>\n                <div class='bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-400 p-4 rounded my-6'>\n                    <p class='text-sm'><i class='fa-solid fa-lightbulb text-yellow-500 mr-2'></i> <strong>Consejo:</strong> Usa el editor para repasar libremente.</p>\n                </div>\n            ",
+          "codigo_inicial": "# Explora y repasa libremente Principios Clean Code y PEP 8\n"
+        },
+        {
+          "id": "m5_l2",
+          "titulo": "Algoritmos y Optimización",
+          "url": "leccion.html?id=m5_l2",
+          "teoria_html": "\n                <h1 class='text-3xl font-extrabold mb-4'>Algoritmos y Optimización</h1>\n                <p class='text-lg text-gray-600 dark:text-gray-300 mb-4'>\n                    Sección teórica interactiva. Los conceptos avanzados de <strong>algoritmos y optimización</strong> del entorno profesional son detallados en los módulos de suscripción avanzada o en próximas actualizaciones del temario. ¡Sigue superando tus metas!\n                </p>\n                <div class='bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-400 p-4 rounded my-6'>\n                    <p class='text-sm'><i class='fa-solid fa-lightbulb text-yellow-500 mr-2'></i> <strong>Consejo:</strong> Usa el editor para repasar libremente.</p>\n                </div>\n            ",
+          "codigo_inicial": "# Explora y repasa libremente Algoritmos y Optimización\n"
+        }
+      ]
+    }
+  ]
+}

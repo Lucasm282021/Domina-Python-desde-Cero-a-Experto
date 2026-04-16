@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluaciones | Dominio Python</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-[#0f172a] dark:text-gray-100 transition-colors duration-300">
+    
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-50 glass border-b border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+            <a href="index.html" class="flex gap-2 items-center">
+                <i class="fa-brands fa-python text-3xl text-blue-500"></i>
+                <span class="font-bold text-xl hidden sm:block">Python<span class="text-blue-500">Mastery</span></span>
+            </a>
+            <div class="flex items-center space-x-6">
+                <a href="cursos.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 font-medium text-sm"><i class="fa-solid fa-arrow-left"></i> Volver a Cursos</a>
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-3xl mx-auto px-4 py-12 fade-in">
+        
+        <div class="text-center mb-10">
+            <span class="inline-block px-3 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300 rounded-full text-xs font-bold mb-4">Módulo 1</span>
+            <h1 class="text-3xl font-extrabold mb-2">Evaluación de Fundamentos</h1>
+            <p class="text-gray-600 dark:text-gray-400">Demuestra tus conocimientos sobre variables, control de flujo y POO.</p>
+        </div>
+
+        <div class="bg-white dark:bg-[#1e293b] rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 p-6 md:p-10 mb-8" id="quiz-container">
+            
+            <div id="quiz-header" class="flex justify-between items-center mb-8 pb-4 border-b border-gray-200 dark:border-gray-700">
+                <h2 class="text-lg font-bold" id="question-counter">Pregunta 1 de 5</h2>
+                <div class="text-sm font-mono text-gray-500">Tiempo estimado: 5 min</div>
+            </div>
+
+            <div id="quiz-body">
+                <h3 class="text-xl font-bold mb-6" id="question-text">¿Cual de las siguientes NO es una palabra reservada en Python?</h3>
+                
+                <div class="space-y-3" id="options-container">
+                    <label class="block cursor-pointer">
+                        <div class="flex items-center p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition">
+                            <input type="radio" name="answer" value="a" class="w-5 h-5 text-blue-600">
+                            <span class="ml-3 text-gray-700 dark:text-gray-200 font-mono">def</span>
+                        </div>
+                    </label>
+                    <label class="block cursor-pointer">
+                        <div class="flex items-center p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition">
+                            <input type="radio" name="answer" value="b" class="w-5 h-5 text-blue-600">
+                            <span class="ml-3 text-gray-700 dark:text-gray-200 font-mono">while</span>
+                        </div>
+                    </label>
+                    <label class="block cursor-pointer">
+                        <div class="flex items-center p-4 border border-blue-500 bg-blue-50 dark:bg-blue-900/20 rounded-lg transition">
+                            <input type="radio" name="answer" value="c" checked class="w-5 h-5 text-blue-600">
+                            <span class="ml-3 text-gray-700 dark:text-gray-200 font-mono">function</span>
+                        </div>
+                    </label>
+                    <label class="block cursor-pointer">
+                        <div class="flex items-center p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-700 transition">
+                            <input type="radio" name="answer" value="d" class="w-5 h-5 text-blue-600">
+                            <span class="ml-3 text-gray-700 dark:text-gray-200 font-mono">class</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-end">
+                <button id="next-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-bold transition flex items-center gap-2">
+                    Siguiente Pregunta <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+            
+        </div>
+        
+        <!-- Results Modal (Hidden default) -->
+        <div id="results-panel" class="hidden text-center bg-white dark:bg-[#1e293b] rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 p-8">
+            <i class="fa-solid fa-trophy text-6xl text-yellow-500 mb-4"></i>
+            <h2 class="text-3xl font-bold mb-2">¡Evaluación Completada!</h2>
+            <p class="text-gray-600 dark:text-gray-400 mb-6">Tu puntuación es:</p>
+            <div class="text-5xl font-black text-blue-600 dark:text-blue-400 mb-8" id="final-score">80%</div>
+            
+            <div class="flex justify-center gap-4">
+                <a href="evaluaciones.html" class="px-6 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 font-bold hover:bg-gray-50 dark:hover:bg-gray-700 transition">Reintentar</a>
+                <a href="certificado.html" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2.5 rounded-lg font-bold transition flex items-center gap-2">Ver Certificado <i class="fa-solid fa-certificate"></i></a>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="js/app.js"></script>
+    <script src="js/quiz.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificado de Finalización</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2pdf for printing certificate -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans h-screen flex flex-col justify-center items-center p-4">
+    
+    <div class="mb-6 flex gap-4">
+        <a href="cursos.html" class="cursor-pointer bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-4 py-2 rounded shadow hover:bg-gray-300 transition">
+            Volver a inicio
+        </a>
+        <button id="download-btn" class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow transition flex items-center gap-2 font-bold">
+            <i class="fa-solid fa-download"></i> Descargar PDF
+        </button>
+    </div>
+
+    <!-- Contenedor del diploma -->
+    <div id="certificate" class="relative w-full max-w-4xl bg-white text-gray-900 border-[10px] border-double border-blue-800 p-12 shadow-2xl aspect-[1.414/1] flex flex-col justify-between" style="background-image: radial-gradient(circle, #ffffff 0%, #f1f5f9 100%);">
+        
+        <!-- Marcas de agua -->
+        <i class="fa-brands fa-python absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-[300px] text-gray-100 opacity-30 pointer-events-none"></i>
+
+        <div class="text-center z-10 relative mt-4">
+            <div class="flex justify-center items-center mb-4">
+                <i class="fa-brands fa-python text-5xl text-blue-600 mr-3"></i>
+                <h1 class="text-2xl font-black uppercase tracking-widest text-gray-800">Python Mastery</h1>
+            </div>
+            
+            <h2 class="text-4xl mt-8 font-serif italic text-gray-600">Certificado de Finalización</h2>
+            <p class="text-lg mt-6 text-gray-500 uppercase tracking-widest">Concedido a</p>
+            
+            <div class="my-6 border-b-2 border-gray-300 mx-auto w-3/4 pb-2">
+                <p class="text-5xl font-bold text-blue-900" id="student-name">Nombre del Estudiante</p>
+            </div>
+
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed mt-4">
+                Por haber completado con éxito todos los módulos y evaluaciones del curso <strong>"Dominio Profesional de Python: De Cero a Experto"</strong>.
+            </p>
+        </div>
+
+        <div class="flex justify-between items-end px-12 pb-4 z-10 relative w-full">
+            <div class="text-center border-t border-gray-400 pt-2 w-48">
+                <p class="font-bold text-gray-800 font-signature text-xl">Lucas Dev</p>
+                <p class="text-xs text-gray-500 uppercase mt-1">Instructor Principal</p>
+            </div>
+            <div class="text-center bg-blue-50 border border-blue-200 rounded-full p-4 shadow-inner">
+                <img src="https://img.icons8.com/color/96/python--v1.png" alt="Python Logo" class="w-16 h-16 opacity-80" />
+            </div>
+            <div class="text-center border-t border-gray-400 pt-2 w-48">
+                <p class="font-bold text-gray-800" id="date-label">15 Abril 2026</p>
+                <p class="text-xs text-gray-500 uppercase mt-1">Fecha de Emisión</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const studentNameStr = localStorage.getItem('python_student_name') || prompt("Ingresa tu nombre para el certificado:") || "Estudiante Dedicado";
+            document.getElementById('student-name').innerText = studentNameStr;
+            localStorage.setItem('python_student_name', studentNameStr);
+
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('date-label').innerText = new Date().toLocaleDateString('es-ES', options);
+
+            document.getElementById('download-btn').addEventListener('click', () => {
+                const element = document.getElementById('certificate');
+                const opt = {
+                    margin:       0,
+                    filename:     'Certificado_Python.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true },
+                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+                };
+
+                // Removemos la sombra al exportar
+                element.classList.remove('shadow-2xl');
+                html2pdf().set(opt).from(element).save().then(() => {
+                    element.classList.add('shadow-2xl');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

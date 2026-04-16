@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos y Módulos | Dominio Python</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-[#0f172a] dark:text-gray-100 transition-colors duration-300">
+    
+    <!-- Navbar (Simplified context) -->
+    <nav class="sticky top-0 z-50 glass border-b border-gray-200 dark:border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between h-16 items-center">
+            <a href="index.html" class="flex gap-2 items-center">
+                <i class="fa-brands fa-python text-3xl text-blue-500"></i>
+                <span class="font-bold text-xl hidden sm:block">Python<span class="text-blue-500">Mastery</span></span>
+            </a>
+            <div class="flex items-center space-x-6">
+                <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-blue-500 font-medium">Inicio</a>
+                <a href="cursos.html" class="text-blue-600 dark:text-blue-400 font-medium">Cursos</a>
+                <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 fade-in">
+        <div class="mb-10">
+            <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white">Ruta de Aprendizaje</h1>
+            <p class="mt-2 text-lg text-gray-600 dark:text-gray-400">Selecciona un módulo para continuar con tu progreso.</p>
+            
+            <!-- Global Progress -->
+            <div class="mt-6 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Progreso Total</span>
+                    <span class="text-sm font-bold text-blue-600 dark:text-blue-400" id="global-progress-text">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                    <div class="bg-blue-600 h-2.5 rounded-full transition-all duration-500" style="width: 0%" id="global-progress-bar"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modules Grid dynamically loaded -->
+        <div id="modules-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Loading placeholder -->
+            <div class="animate-pulse bg-gray-200 dark:bg-gray-700 h-64 rounded-xl"></div>
+            <div class="animate-pulse bg-gray-200 dark:bg-gray-700 h-64 rounded-xl"></div>
+        </div>
+    </main>
+
+    <script src="js/app.js"></script>
+    <script src="js/progress.js"></script>
+    <script>
+        // Load modules from JSON and render
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('data/contenidos.json');
+                const data = await response.json();
+                const container = document.getElementById('modules-container');
+                container.innerHTML = ''; // clear loading
+                
+                let iconMap = {
+                    'modulo_1': 'fa-code',
+                    'modulo_2': 'fa-terminal',
+                    'modulo_3': 'fa-database',
+                    'modulo_4': 'fa-route',
+                    'modulo_5': 'fa-wand-magic-sparkles'
+                };
+
+                // Assume getProgress is defined in progress.js
+                // we'll mock it here temporarily if not ready
+                let progressData = JSON.parse(localStorage.getItem('python_course_progress') || '{}');
+
+                data.modulos.forEach((modulo, index) => {
+                    let icon = iconMap[modulo.id] || 'fa-book';
+                    
+                    // calculo rapido de progreso local del modulo
+                    let leccionesCompletadas = modulo.lecciones.filter(l => progressData[l.id]).length;
+                    let porcentaje = Math.round((leccionesCompletadas / modulo.lecciones.length) * 100) || 0;
+
+                    let card = document.createElement('div');
+                    card.className = "course-card bg-white dark:bg-[#1e293b] rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col";
+                    card.innerHTML = `
+                        <div class="p-6 flex-grow">
+                            <div class="w-12 h-12 inline-flex items-center justify-center rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 mb-4">
+                                <i class="fa-solid ${icon} text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">${modulo.titulo}</h3>
+                            <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">${modulo.descripcion}</p>
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400">
+                                    <span>Progreso del módulo</span>
+                                    <span>${porcentaje}%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+                                    <div class="bg-emerald-500 h-1.5 rounded-full" style="width: ${porcentaje}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-6 py-4 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+                            <a href="${modulo.lecciones[0].url}" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium text-sm flex items-center justify-between">
+                                Entrar al Módulo <i class="fa-solid fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+                
+                // Update global progress
+                if (window.updateGlobalProgress) {
+                    window.updateGlobalProgress(data);
+                }
+
+            } catch (error) {
+                console.error("Error cargando módulos", error);
+            }
+        });
+    </script>
+</body>
+</html>
