@@ -164,6 +164,19 @@
             }
 
             markDoneBtn.addEventListener('click', () => {
+                // Validación estricta: Si no está completada históricamente y no la ejecutó ahora
+                if (!window.isLessonCompleted(currentLessonId) && !window._practiceCompleted) {
+                    alert("¡Atención! Para marcar la lección como completada y poder avanzar, primero debes presionar 'Ejecutar' en el código de la derecha y asegurarte de que corra sin errores.");
+                    
+                    // Efecto visual para llamar la atención sobre el botón de ejecutar
+                    const runBtnDoc = document.getElementById("run-code-btn");
+                    if (runBtnDoc) {
+                        runBtnDoc.classList.add("ring-4", "ring-yellow-400", "scale-105");
+                        setTimeout(() => runBtnDoc.classList.remove("ring-4", "ring-yellow-400", "scale-105"), 1000);
+                    }
+                    return;
+                }
+
                 window.markLessonAsCompleted(currentLessonId);
                 markDoneBtn.classList.replace('bg-blue-600', 'bg-green-600');
                 markDoneBtn.innerHTML = '<i class="fa-solid fa-check-double"></i> Completada';

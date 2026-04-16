@@ -30,7 +30,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Función para manejar print en Pyodide para que vaya a nuestro div
     function appendOutput(text) {
         if(text === undefined) return;
-        consoleOutput.innerHTML += text + "\n";
+        
+        // Escapar caracteres HTML para que salidas como <class 'int'> no se vuelvan invisibles
+        const escapedText = String(text)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+            
+        consoleOutput.innerHTML += escapedText + "\n";
         // Auto scroll
         consoleOutput.scrollTop = consoleOutput.scrollHeight;
     }
@@ -65,7 +72,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         try {
             await pyodideInstance.runPythonAsync(code);
+            window._practiceCompleted = true; // Flag for strict progression
         } catch (err) {
+            window._practiceCompleted = false;
             appendOutput(`<span class="text-red-400 font-bold">Error:</span>\n<span class="text-red-400">${err}</span>`);
         } finally {
             runBtn.classList.remove("opacity-70", "cursor-wait");
