@@ -133,6 +133,15 @@
                             <button id="clear-console" class="hover:text-white"><i class="fa-solid fa-trash-can"></i></button>
                         </div>
                         <pre id="console-output" class="p-3 text-sm font-mono text-gray-300 flex-1 overflow-y-auto whitespace-pre-wrap"></pre>
+                        <!-- Fila de input interactivo: aparece cuando Python llama a input() -->
+                        <div id="console-input-row" class="hidden items-center gap-0 bg-gray-900 border-t border-gray-700 px-3 py-1.5 shrink-0">
+                            <span class="text-yellow-400 font-mono text-sm mr-1">›</span>
+                            <span id="console-input-prompt" class="text-yellow-400 font-mono text-sm mr-1 whitespace-pre"></span>
+                            <input id="console-input-field" type="text" autocomplete="off" spellcheck="false"
+                                   class="flex-1 bg-transparent text-green-400 font-mono text-sm outline-none caret-green-400 min-w-0"
+                                   placeholder="Escribí tu respuesta y presioná Enter...">
+                            <kbd id="console-input-submit" class="ml-2 text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 px-2 py-0.5 rounded cursor-pointer select-none shrink-0">Enter ↵</kbd>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -237,6 +246,15 @@
                                 <button id="clear-practice-console" class="hover:text-white"><i class="fa-solid fa-trash-can"></i></button>
                             </div>
                             <pre id="practice-console" class="p-3 text-sm font-mono text-gray-300 flex-1 overflow-y-auto whitespace-pre-wrap"></pre>
+                            <!-- Fila de input interactivo para la práctica -->
+                            <div id="practice-input-row" class="hidden items-center gap-0 bg-gray-900 border-t border-gray-700 px-3 py-1.5 shrink-0">
+                                <span class="text-yellow-400 font-mono text-sm mr-1">›</span>
+                                <span id="practice-input-prompt" class="text-yellow-400 font-mono text-sm mr-1 whitespace-pre"></span>
+                                <input id="practice-input-field" type="text" autocomplete="off" spellcheck="false"
+                                       class="flex-1 bg-transparent text-green-400 font-mono text-sm outline-none caret-green-400 min-w-0"
+                                       placeholder="Escribí tu respuesta y presioná Enter...">
+                                <kbd id="practice-input-submit" class="ml-2 text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 px-2 py-0.5 rounded cursor-pointer select-none shrink-0">Enter ↵</kbd>
+                            </div>
                         </div>
                     </div>
                     <!-- Botón completar lección -->
@@ -325,6 +343,15 @@
                                 <button id="clear-challenge-console" class="hover:text-white"><i class="fa-solid fa-trash-can"></i></button>
                             </div>
                             <pre id="challenge-console" class="p-3 text-sm font-mono text-gray-300 flex-1 overflow-y-auto whitespace-pre-wrap"></pre>
+                            <!-- Fila de input interactivo para el desafío -->
+                            <div id="challenge-input-row" class="hidden items-center gap-0 bg-gray-900 border-t border-gray-700 px-3 py-1.5 shrink-0">
+                                <span class="text-yellow-400 font-mono text-sm mr-1">›</span>
+                                <span id="challenge-input-prompt" class="text-yellow-400 font-mono text-sm mr-1 whitespace-pre"></span>
+                                <input id="challenge-input-field" type="text" autocomplete="off" spellcheck="false"
+                                       class="flex-1 bg-transparent text-green-400 font-mono text-sm outline-none caret-green-400 min-w-0"
+                                       placeholder="Escribí tu respuesta y presioná Enter...">
+                                <kbd id="challenge-input-submit" class="ml-2 text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 px-2 py-0.5 rounded cursor-pointer select-none shrink-0">Enter ↵</kbd>
+                            </div>
                         </div>
                     </div>
                     <div class="mt-6 flex justify-end">
@@ -669,23 +696,53 @@
         });
         document.getElementById('clear-practice-console').addEventListener('click', () => {
             document.getElementById('practice-console').innerHTML = '';
+            const row = document.getElementById('practice-input-row');
+            if (row) { row.classList.add('hidden'); row.classList.remove('flex'); }
         });
+
+        // Registrar listeners del input interactivo de la consola de práctica
+        window._registerInputRowListeners?.(
+            'practice-console', 'practice-input-row', 'practice-input-field', 'practice-input-submit'
+        );
+        if (typeof window._registerInputRowListeners !== 'function' && typeof registerInputRowListeners === 'function') {
+            registerInputRowListeners('practice-console','practice-input-row','practice-input-field','practice-input-submit');
+        }
 
         document.getElementById('run-practice-btn').addEventListener('click', async () => {
             if (!window.pyodideInstance) { alert('El motor Python aún no está listo, esperá un momento.'); return; }
-            const code = practiceEditor?.getValue() || '';
-            const output = document.getElementById('practice-console');
+            const rawCode = practiceEditor?.getValue() || '';
+            const output  = document.getElementById('practice-console');
             output.innerHTML = '';
+
+            // Cancelar input pendiente y ocultar fila
+            const practiceInputRow = document.getElementById('practice-input-row');
+            if (practiceInputRow) { practiceInputRow.classList.add('hidden'); practiceInputRow.classList.remove('flex'); }
+
+            // Apuntar el sistema de input a la consola de práctica
+            window._setActiveConsole(
+                'practice-console',
+                'practice-input-row',
+                'practice-input-prompt',
+                'practice-input-field'
+            );
+
             const loader = document.getElementById('practice-loader');
             loader.classList.remove('hidden');
+
+            // Redirigir salida a esta consola
+            window.pyodideInstance.setStdout({ batched: (t) => { output.innerHTML += escapeHtml(t) + '\n'; output.scrollTop = output.scrollHeight; } });
+            window.pyodideInstance.setStderr({ batched: (t) => { output.innerHTML += `<span class="text-red-400">${escapeHtml(t)}</span>\n`; output.scrollTop = output.scrollHeight; } });
+
+            // Transformar código para input() async
+            const { code } = window._transformForInput(rawCode);
+
             let success = false;
             try {
-                window.pyodideInstance.setStdout({ batched: (t) => output.innerHTML += escapeHtml(t) + '\n' });
-                window.pyodideInstance.setStderr({ batched: (t) => output.innerHTML += `<span class="text-red-400">${escapeHtml(t)}</span>\n` });
                 await window.pyodideInstance.runPythonAsync(code);
                 success = true;
             } catch(err) {
                 output.innerHTML += `<span class="text-red-400 font-bold">Error:\n${escapeHtml(String(err))}</span>`;
+                output.scrollTop = output.scrollHeight;
             } finally {
                 loader.classList.add('hidden');
             }
@@ -871,25 +928,51 @@
         });
         document.getElementById('clear-challenge-console').addEventListener('click', () => {
             document.getElementById('challenge-console').innerHTML = '';
+            const row = document.getElementById('challenge-input-row');
+            if (row) { row.classList.add('hidden'); row.classList.remove('flex'); }
+        });
+
+        // Registrar listeners del input del desafío
+        document.getElementById('challenge-input-submit')?.addEventListener('click', () =>
+            window._submitConsoleInput('challenge-console', 'challenge-input-row', 'challenge-input-field'));
+        document.getElementById('challenge-input-field')?.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); window._submitConsoleInput('challenge-console', 'challenge-input-row', 'challenge-input-field'); }
         });
 
         document.getElementById('run-challenge-btn').addEventListener('click', async () => {
             if (!window.pyodideInstance) { alert('El motor Python aún no está listo.'); return; }
-            const code = challengeEditor?.getValue() || '';
-            const output = document.getElementById('challenge-console');
+            const rawCode = challengeEditor?.getValue() || '';
+            const output  = document.getElementById('challenge-console');
             output.innerHTML = '';
+
+            // Cancelar input pendiente y ocultar fila
+            const chalInputRow = document.getElementById('challenge-input-row');
+            if (chalInputRow) { chalInputRow.classList.add('hidden'); chalInputRow.classList.remove('flex'); }
+
+            // Apuntar input a la consola del desafío
+            window._setActiveConsole(
+                'challenge-console',
+                'challenge-input-row',
+                'challenge-input-prompt',
+                'challenge-input-field'
+            );
+
             const loader = document.getElementById('challenge-loader');
             loader.classList.remove('hidden');
+
+            window.pyodideInstance.setStdout({ batched: (t) => { output.innerHTML += escapeHtml(t) + '\n'; output.scrollTop = output.scrollHeight; } });
+            window.pyodideInstance.setStderr({ batched: (t) => { output.innerHTML += `<span class="text-red-400">${escapeHtml(t)}</span>\n`; output.scrollTop = output.scrollHeight; } });
+
+            const { code } = window._transformForInput(rawCode);
+
             let success = false;
             try {
-                window.pyodideInstance.setStdout({ batched: (t) => output.innerHTML += escapeHtml(t) + '\n' });
-                window.pyodideInstance.setStderr({ batched: (t) => output.innerHTML += `<span class="text-red-400">${escapeHtml(t)}</span>\n` });
                 await window.pyodideInstance.runPythonAsync(code);
                 success = true;
             } catch(err) {
                 output.innerHTML += `<span class="text-red-400 font-bold">Error:\n${escapeHtml(String(err))}</span>`;
+                output.scrollTop = output.scrollHeight;
             } finally {
-                loader.classList.remove('hidden');
                 loader.classList.add('hidden');
             }
             if (success) {
