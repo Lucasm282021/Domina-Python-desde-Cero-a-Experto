@@ -163,7 +163,7 @@ window._registerInputRowListeners = registerInputRowListeners;
 // ══════════════════════════════════════════════════════════════════════════════
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const defaultCode = document.getElementById("code-editor").value;
+    const EMPTY_CODE = '# Escribí tu código aquí\n';
 
     // 1. Inicializar CodeMirror
     codeMirrorEditor = CodeMirror.fromTextArea(document.getElementById("code-editor"), {
@@ -284,6 +284,17 @@ builtins.input = __py_input_interactive
             pyodideLoader.classList.add("hidden");
         }
 
+        if (success) {
+            // Verificar que el código produjo salida real en la consola
+            const hasOutput = consoleOutput.textContent.trim().length > 0;
+            if (!hasOutput) {
+                window._practiceCompleted = false;
+                consoleOutput.innerHTML += `<span class="text-yellow-400">&#9888; Tu código no produjo ninguna salida.</span>`;
+                consoleOutput.scrollTop = consoleOutput.scrollHeight;
+                success = false;
+            }
+        }
+
         // Notificar al controlador de la lección
         if (typeof window._onCodeRan === 'function') window._onCodeRan(success);
     });
@@ -298,8 +309,8 @@ builtins.input = __py_input_interactive
     });
 
     resetBtn.addEventListener("click", () => {
-        if (confirm("¿Seguro que quieres restablecer el código al estado original? Se perderán tus cambios.")) {
-            codeMirrorEditor.setValue(defaultCode);
+        if (confirm("\u00bfLimpiar el editor? Se borrará el código que escribiste.")) {
+            codeMirrorEditor.setValue(EMPTY_CODE);
             consoleOutput.innerHTML = "";
         }
     });

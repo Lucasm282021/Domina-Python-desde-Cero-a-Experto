@@ -192,36 +192,70 @@ estudiante.aprender(<span class="text-green-300">"Desarrollo Web con Django"</sp
         <!-- Sección Temario -->
         <section id="temario" class="py-20 bg-gray-50 dark:bg-darkBg border-t border-gray-100 dark:border-gray-800">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-14">
+                <div class="text-center mb-10">
                     <span class="inline-block bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-sm font-semibold px-4 py-1.5 rounded-full mb-4">Plan de estudios</span>
                     <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 dark:text-white">
-                        Temario completo del curso
+                        Tu ruta de aprendizaje
                     </h2>
                     <p class="mt-3 text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-                        De cero a experto. Cada módulo incluye teoría, ejercicios interactivos y evaluaciones.
+                        5 módulos ordenados para llevarte de cero a desarrollador Python profesional. Cada uno construye sobre el anterior.
                     </p>
                 </div>
 
-                <div class="space-y-5 max-w-4xl mx-auto">
+                <!-- Ruta visual de aprendizaje -->
+                <div class="max-w-4xl mx-auto mb-10 hidden sm:flex items-center justify-between gap-1 px-2">
+                    <div class="flex flex-col items-center gap-1 text-center flex-1">
+                        <span class="w-9 h-9 flex items-center justify-center rounded-full bg-blue-500 text-white font-bold text-sm shadow">1</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400 leading-tight">Fundamentos</span>
+                    </div>
+                    <div class="flex-1 h-0.5 bg-gradient-to-r from-blue-400 to-emerald-400 rounded mt-[-14px]"></div>
+                    <div class="flex flex-col items-center gap-1 text-center flex-1">
+                        <span class="w-9 h-9 flex items-center justify-center rounded-full bg-emerald-500 text-white font-bold text-sm shadow">2</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400 leading-tight">Herramientas</span>
+                    </div>
+                    <div class="flex-1 h-0.5 bg-gradient-to-r from-emerald-400 to-purple-400 rounded mt-[-14px]"></div>
+                    <div class="flex flex-col items-center gap-1 text-center flex-1">
+                        <span class="w-9 h-9 flex items-center justify-center rounded-full bg-purple-500 text-white font-bold text-sm shadow">3</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400 leading-tight">Bases de datos</span>
+                    </div>
+                    <div class="flex-1 h-0.5 bg-gradient-to-r from-purple-400 to-orange-400 rounded mt-[-14px]"></div>
+                    <div class="flex flex-col items-center gap-1 text-center flex-1">
+                        <span class="w-9 h-9 flex items-center justify-center rounded-full bg-orange-500 text-white font-bold text-sm shadow">4</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400 leading-tight">Especialización</span>
+                    </div>
+                    <div class="flex-1 h-0.5 bg-gradient-to-r from-orange-400 to-pink-400 rounded mt-[-14px]"></div>
+                    <div class="flex flex-col items-center gap-1 text-center flex-1">
+                        <span class="w-9 h-9 flex items-center justify-center rounded-full bg-pink-500 text-white font-bold text-sm shadow">5</span>
+                        <span class="text-xs text-gray-500 dark:text-gray-400 leading-tight">Excelencia</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4 max-w-4xl mx-auto">
 
                     <!-- Módulo 1 -->
                     <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex items-center gap-4 p-5 cursor-pointer temario-toggle">
                             <span class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 font-bold text-lg">1</span>
-                            <div class="flex-grow">
-                                <h3 class="font-bold text-gray-900 dark:text-white text-lg">Fundamentos de Python</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Sintaxis, variables, tipos de datos y operadores</p>
+                            <div class="flex-grow min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h3 class="font-bold text-gray-900 dark:text-white text-lg">Fundamentos de Python</h3>
+                                    <span class="text-xs text-blue-500 dark:text-blue-400 font-medium">— El punto de partida</span>
+                                </div>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Aprendé el lenguaje desde cero: variables, strings, listas, diccionarios y funciones.</p>
                             </div>
-                            <span class="badge-pill bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-semibold px-3 py-1 rounded-full hidden sm:block">5 lecciones</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon"></i>
+                            <span class="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 text-xs font-semibold px-3 py-1 rounded-full flex-shrink-0 hidden sm:block">7 lecciones</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon flex-shrink-0"></i>
                         </div>
                         <div class="temario-body hidden px-5 pb-5 border-t border-gray-100 dark:border-gray-700">
-                            <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Introducción y entorno Python</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Variables y tipos de datos</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Operadores y expresiones</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Entrada y salida de datos</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Strings y operaciones básicas</li>
+                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-4 mb-3 italic">Todo empieza aquí. Sin dominar esto, el resto no tiene base sólida.</p>
+                            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Variables, Tipos de Datos y Operadores</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Strings: Métodos, Slicing e Input</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Condicionales y Lógica Booleana</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Iteraciones: for, while y range()</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Listas y Colecciones</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Diccionarios</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-blue-400 w-4"></i> Funciones y Parámetros</li>
                             </ul>
                             <a href="cursos.html" class="inline-flex items-center gap-2 mt-5 text-blue-600 dark:text-blue-400 font-semibold text-sm hover:underline">
                                 Ir al módulo <i class="fa-solid fa-arrow-right"></i>
@@ -233,21 +267,31 @@ estudiante.aprender(<span class="text-green-300">"Desarrollo Web con Django"</sp
                     <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex items-center gap-4 p-5 cursor-pointer temario-toggle">
                             <span class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-300 font-bold text-lg">2</span>
-                            <div class="flex-grow">
-                                <h3 class="font-bold text-gray-900 dark:text-white text-lg">Control de Flujo y Funciones</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Condicionales, bucles, funciones y módulos</p>
+                            <div class="flex-grow min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h3 class="font-bold text-gray-900 dark:text-white text-lg">Tu Entorno de Trabajo</h3>
+                                    <span class="text-xs text-emerald-500 dark:text-emerald-400 font-medium">— Trabajá como un profesional</span>
+                                </div>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Configurá las herramientas reales del día a día: entornos virtuales y control de versiones con Git.</p>
                             </div>
-                            <span class="badge-pill bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 text-xs font-semibold px-3 py-1 rounded-full hidden sm:block">6 lecciones</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon"></i>
+                            <span class="bg-emerald-100 dark:bg-emerald-900 text-emerald-700 dark:text-emerald-300 text-xs font-semibold px-3 py-1 rounded-full flex-shrink-0 hidden sm:block">2 lecciones</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon flex-shrink-0"></i>
                         </div>
                         <div class="temario-body hidden px-5 pb-5 border-t border-gray-100 dark:border-gray-700">
-                            <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-emerald-400 w-4"></i> Condicionales if/elif/else</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-emerald-400 w-4"></i> Bucles for y while</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-emerald-400 w-4"></i> Comprensiones de listas</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-emerald-400 w-4"></i> Definición de funciones</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-emerald-400 w-4"></i> Argumentos y valores por defecto</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-emerald-400 w-4"></i> Módulos y paquetes</li>
+                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-4 mb-3 italic">Antes de construir proyectos reales, necesitás saber cómo se organiza el trabajo en la industria.</p>
+                            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-emerald-400 w-4"></i> Entornos Virtuales (venv, conda)</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-emerald-400 w-4"></i> Git y Control de Versiones</li>
+                                <li class="flex items-center gap-2 opacity-60">
+                                    <i class="fa-solid fa-spinner fa-spin text-orange-400 w-4"></i>
+                                    <span>Debugging y Profiling</span>
+                                    <span class="ml-auto inline-block bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 text-xs font-semibold px-2 py-0.5 rounded-full">En desarrollo</span>
+                                </li>
+                                <li class="flex items-center gap-2 opacity-60">
+                                    <i class="fa-solid fa-clock text-yellow-400 w-4"></i>
+                                    <span>Testing con pytest</span>
+                                    <span class="ml-auto inline-block bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 text-xs font-semibold px-2 py-0.5 rounded-full">Próximamente</span>
+                                </li>
                             </ul>
                             <a href="cursos.html" class="inline-flex items-center gap-2 mt-5 text-emerald-600 dark:text-emerald-400 font-semibold text-sm hover:underline">
                                 Ir al módulo <i class="fa-solid fa-arrow-right"></i>
@@ -259,20 +303,31 @@ estudiante.aprender(<span class="text-green-300">"Desarrollo Web con Django"</sp
                     <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex items-center gap-4 p-5 cursor-pointer temario-toggle">
                             <span class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 font-bold text-lg">3</span>
-                            <div class="flex-grow">
-                                <h3 class="font-bold text-gray-900 dark:text-white text-lg">Estructuras de Datos</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Listas, tuplas, diccionarios y conjuntos</p>
+                            <div class="flex-grow min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h3 class="font-bold text-gray-900 dark:text-white text-lg">Persistencia de Datos</h3>
+                                    <span class="text-xs text-purple-500 dark:text-purple-400 font-medium">— Guardá y consultá información</span>
+                                </div>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Aprendé SQL desde cero e integrá bases de datos reales en tus proyectos Python con SQLite y SQLAlchemy.</p>
                             </div>
-                            <span class="badge-pill bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-semibold px-3 py-1 rounded-full hidden sm:block">5 lecciones</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon"></i>
+                            <span class="bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 text-xs font-semibold px-3 py-1 rounded-full flex-shrink-0 hidden sm:block">2 lecciones</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon flex-shrink-0"></i>
                         </div>
                         <div class="temario-body hidden px-5 pb-5 border-t border-gray-100 dark:border-gray-700">
-                            <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-purple-400 w-4"></i> Listas y sus métodos</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-purple-400 w-4"></i> Tuplas e inmutabilidad</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-purple-400 w-4"></i> Diccionarios y acceso a datos</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-purple-400 w-4"></i> Conjuntos (sets)</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-purple-400 w-4"></i> Estructuras anidadas</li>
+                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-4 mb-3 italic">Casi toda aplicación del mundo real necesita guardar datos. Aquí aprendés cómo hacerlo correctamente.</p>
+                            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-purple-400 w-4"></i> Introducción a SQL</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-purple-400 w-4"></i> Integración con Python (SQLite / SQLAlchemy)</li>
+                                <li class="flex items-center gap-2 opacity-60">
+                                    <i class="fa-solid fa-spinner fa-spin text-orange-400 w-4"></i>
+                                    <span>PostgreSQL y migraciones</span>
+                                    <span class="ml-auto inline-block bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 text-xs font-semibold px-2 py-0.5 rounded-full">En desarrollo</span>
+                                </li>
+                                <li class="flex items-center gap-2 opacity-60">
+                                    <i class="fa-solid fa-clock text-yellow-400 w-4"></i>
+                                    <span>Diseño de esquemas relacionales</span>
+                                    <span class="ml-auto inline-block bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 text-xs font-semibold px-2 py-0.5 rounded-full">Próximamente</span>
+                                </li>
                             </ul>
                             <a href="cursos.html" class="inline-flex items-center gap-2 mt-5 text-purple-600 dark:text-purple-400 font-semibold text-sm hover:underline">
                                 Ir al módulo <i class="fa-solid fa-arrow-right"></i>
@@ -284,21 +339,37 @@ estudiante.aprender(<span class="text-green-300">"Desarrollo Web con Django"</sp
                     <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex items-center gap-4 p-5 cursor-pointer temario-toggle">
                             <span class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-orange-100 dark:bg-orange-900 text-orange-600 dark:text-orange-300 font-bold text-lg">4</span>
-                            <div class="flex-grow">
-                                <h3 class="font-bold text-gray-900 dark:text-white text-lg">Programación Orientada a Objetos</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Clases, herencia, polimorfismo y encapsulamiento</p>
+                            <div class="flex-grow min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h3 class="font-bold text-gray-900 dark:text-white text-lg">Elegí tu Especialización</h3>
+                                    <span class="text-xs text-orange-500 dark:text-orange-400 font-medium">— Aplicá Python en el mundo real</span>
+                                </div>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Aplicá todo lo aprendido en el área que más te apasiona: desarrollo web, ciencia de datos o automatización.</p>
                             </div>
-                            <span class="badge-pill bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 text-xs font-semibold px-3 py-1 rounded-full hidden sm:block">6 lecciones</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon"></i>
+                            <span class="bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 text-xs font-semibold px-3 py-1 rounded-full flex-shrink-0 hidden sm:block">3 lecciones</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon flex-shrink-0"></i>
                         </div>
                         <div class="temario-body hidden px-5 pb-5 border-t border-gray-100 dark:border-gray-700">
-                            <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Clases y objetos</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Atributos y métodos</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Herencia y sobrescritura</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Encapsulamiento</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Métodos especiales (dunder)</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Patrones de diseño básicos</li>
+                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-4 mb-3 italic">Tres caminos distintos según tu objetivo profesional. Podés explorar los tres o profundizar en uno.</p>
+                            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Desarrollo Web (FastAPI, Django)</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Data Science (NumPy, Pandas)</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-orange-400 w-4"></i> Automatización y Web Scraping</li>
+                                <li class="flex items-center gap-2 opacity-60">
+                                    <i class="fa-solid fa-spinner fa-spin text-orange-400 w-4"></i>
+                                    <span>Programación Orientada a Objetos (POO)</span>
+                                    <span class="ml-auto inline-block bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 text-xs font-semibold px-2 py-0.5 rounded-full">En desarrollo</span>
+                                </li>
+                                <li class="flex items-center gap-2 opacity-60">
+                                    <i class="fa-solid fa-clock text-yellow-400 w-4"></i>
+                                    <span>APIs REST con FastAPI (proyecto completo)</span>
+                                    <span class="ml-auto inline-block bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 text-xs font-semibold px-2 py-0.5 rounded-full">Próximamente</span>
+                                </li>
+                                <li class="flex items-center gap-2 opacity-60">
+                                    <i class="fa-solid fa-clock text-yellow-400 w-4"></i>
+                                    <span>Machine Learning básico con scikit-learn</span>
+                                    <span class="ml-auto inline-block bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 text-xs font-semibold px-2 py-0.5 rounded-full">Próximamente</span>
+                                </li>
                             </ul>
                             <a href="cursos.html" class="inline-flex items-center gap-2 mt-5 text-orange-600 dark:text-orange-400 font-semibold text-sm hover:underline">
                                 Ir al módulo <i class="fa-solid fa-arrow-right"></i>
@@ -310,22 +381,36 @@ estudiante.aprender(<span class="text-green-300">"Desarrollo Web con Django"</sp
                     <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                         <div class="flex items-center gap-4 p-5 cursor-pointer temario-toggle">
                             <span class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-xl bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-300 font-bold text-lg">5</span>
-                            <div class="flex-grow">
-                                <h3 class="font-bold text-gray-900 dark:text-white text-lg">Python Avanzado y Aplicaciones</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Decoradores, generadores, async y proyectos reales</p>
+                            <div class="flex-grow min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h3 class="font-bold text-gray-900 dark:text-white text-lg">Código de Excelencia</h3>
+                                    <span class="text-xs text-pink-500 dark:text-pink-400 font-medium">— El sello del profesional</span>
+                                </div>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Lo que separa a un programador amateur de uno senior: Clean Code, PEP 8, algoritmos y rendimiento.</p>
                             </div>
-                            <span class="badge-pill bg-pink-100 dark:bg-pink-900 text-pink-700 dark:text-pink-300 text-xs font-semibold px-3 py-1 rounded-full hidden sm:block">7 lecciones</span>
-                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon"></i>
+                            <span class="bg-pink-100 dark:bg-pink-900 text-pink-700 dark:text-pink-300 text-xs font-semibold px-3 py-1 rounded-full flex-shrink-0 hidden sm:block">2 lecciones</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 transition-transform temario-icon flex-shrink-0"></i>
                         </div>
                         <div class="temario-body hidden px-5 pb-5 border-t border-gray-100 dark:border-gray-700">
-                            <ul class="mt-4 space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Decoradores avanzados</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Generadores e iteradores</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Programación asíncrona (asyncio)</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Manejo de archivos y APIs</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Testing con pytest</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Proyecto Web con Django</li>
-                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Proyecto Data Science</li>
+                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-4 mb-3 italic">Cualquiera puede hacer que el código funcione. Pocos saben hacerlo de forma limpia, eficiente y mantenible.</p>
+                            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Principios Clean Code y PEP 8</li>
+                                <li class="flex items-center gap-2"><i class="fa-solid fa-circle-play text-pink-400 w-4"></i> Algoritmos y Optimización (Big O)</li>
+                                <li class="flex items-center gap-2 opacity-60">
+                                    <i class="fa-solid fa-spinner fa-spin text-orange-400 w-4"></i>
+                                    <span>Decoradores y generadores avanzados</span>
+                                    <span class="ml-auto inline-block bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 text-xs font-semibold px-2 py-0.5 rounded-full">En desarrollo</span>
+                                </li>
+                                <li class="flex items-center gap-2 opacity-60">
+                                    <i class="fa-solid fa-spinner fa-spin text-orange-400 w-4"></i>
+                                    <span>Programación asíncrona (asyncio)</span>
+                                    <span class="ml-auto inline-block bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 text-xs font-semibold px-2 py-0.5 rounded-full">En desarrollo</span>
+                                </li>
+                                <li class="flex items-center gap-2 opacity-60">
+                                    <i class="fa-solid fa-clock text-yellow-400 w-4"></i>
+                                    <span>Patrones de diseño (Design Patterns)</span>
+                                    <span class="ml-auto inline-block bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 text-xs font-semibold px-2 py-0.5 rounded-full">Próximamente</span>
+                                </li>
                             </ul>
                             <a href="cursos.html" class="inline-flex items-center gap-2 mt-5 text-pink-600 dark:text-pink-400 font-semibold text-sm hover:underline">
                                 Ir al módulo <i class="fa-solid fa-arrow-right"></i>
@@ -343,7 +428,7 @@ estudiante.aprender(<span class="text-green-300">"Desarrollo Web con Django"</sp
                 </div>
             </div>
         </section>
-    </main>
+        </main>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-gray-400 pt-14 pb-8">
